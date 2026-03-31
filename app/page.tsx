@@ -5,7 +5,7 @@ import { useStore } from '../store/state';
 import Sidebar from '../components/Sidebar';
 import TopographCanvas from '../components/TopographCanvas';
 import TutorialPanel from '../components/TutorialPanel';
-import { BG_DEEP, BG_CARD, ACCENT, TEXT, TEXT_DIM } from '../lib/topograph-render';
+import { BG_DEEP, BG_CARD, ACCENT, TEXT, TEXT_DIM, UI_TEXT } from '../lib/topograph-render';
 
 // ---------------------------------------------------------------------------
 // Tutorial file manifest — must match public/tutorials/
@@ -35,12 +35,11 @@ function AnimationDialog({ onClose }: { onClose: () => void }) {
   return (
     <div className="anim-dialog-overlay" onClick={e => e.target === e.currentTarget && onClose()}>
       <div className="anim-dialog">
-        <div style={{ fontFamily: 'JetBrains Mono, monospace', fontSize: 16,
+        <div style={{ fontFamily: 'JetBrains Mono, monospace', fontSize: '1rem',
                       fontWeight: 600, color: ACCENT, marginBottom: 16 }}>
           Animation Controls
         </div>
-        <div style={{ fontFamily: 'JetBrains Mono, monospace', fontSize: 11,
-                      color: TEXT_DIM, marginBottom: 14, lineHeight: 1.6 }}>
+        <div style={{ fontSize: '0.6875rem', color: UI_TEXT, marginBottom: 14, lineHeight: 1.6 }}>
           Toggle individual animation layers in the topograph.
         </div>
         {[
@@ -50,14 +49,13 @@ function AnimationDialog({ onClose }: { onClose: () => void }) {
         ].map(([label, value, setter, hint]) => (
           <div key={label as string} style={{ marginBottom: 12 }}>
             <label style={{ display: 'flex', alignItems: 'center', gap: 8, cursor: 'pointer',
-                            color: TEXT, fontSize: 13, fontFamily: 'JetBrains Mono, monospace' }}>
+                            color: UI_TEXT, fontSize: '0.8125rem' }}>
               <input type="checkbox" checked={value as boolean}
                      onChange={e => (setter as (v: boolean) => void)(e.target.checked)}
                      style={{ accentColor: ACCENT, width: 14, height: 14 }} />
               {label as string}
             </label>
-            <div style={{ fontSize: 10, color: TEXT_DIM, marginLeft: 22,
-                          fontFamily: 'JetBrains Mono, monospace', marginTop: 2 }}>
+            <div style={{ fontSize: '0.625rem', color: UI_TEXT, marginLeft: 22, marginTop: 2 }}>
               {hint as string}
             </div>
           </div>
@@ -66,7 +64,7 @@ function AnimationDialog({ onClose }: { onClose: () => void }) {
           <button onClick={onClose}
                   style={{ background: ACCENT, color: '#0d0d1a', border: 'none',
                            borderRadius: 6, padding: '6px 18px', cursor: 'pointer',
-                           fontFamily: 'JetBrains Mono, monospace', fontWeight: 700, fontSize: 12 }}>
+                           fontFamily: 'JetBrains Mono, monospace', fontWeight: 700, fontSize: '0.75rem' }}>
             Done
           </button>
         </div>

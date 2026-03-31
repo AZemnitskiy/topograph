@@ -5,7 +5,7 @@ import { useStore, useDisplayValues } from '../store/state';
 import { drawTopographSvg, fmtVal } from '../lib/topograph-render';
 import { areEquivalent } from '../lib/topograph-math';
 import {
-  ACCENT, ACCENT2, TEXT, TEXT_DIM, BG_DEEP, BG_CARD, GREEN, RED_COL,
+  ACCENT, ACCENT2, TEXT, TEXT_DIM, BG_DEEP, BG_CARD, GREEN, RED_COL, UI_TEXT,
 } from '../lib/topograph-render';
 
 const MODE_OPTS: [string, string][] = [
@@ -112,27 +112,27 @@ export default function TopographCanvas() {
     }
 
     svgContent = (
-      <>
-        <div style={{ display: 'flex', gap: 16, alignItems: 'flex-start', flexWrap: 'wrap' }}>
-          <div style={{ flex: 1, minWidth: 300 }}>
-            <div style={{ fontFamily: 'JetBrains Mono, monospace', fontSize: 15, fontWeight: 600, color: ACCENT, marginBottom: 8, textAlign: 'center' }}>
+      <div style={{ display: 'flex', flexDirection: 'column', width: '100%', height: '100%', minWidth: 0 }}>
+        <div style={{ display: 'flex', gap: 16, alignItems: 'flex-start', flex: 1, minHeight: 0, minWidth: 0 }}>
+          <div style={{ flex: 1, minWidth: 0 }}>
+            <div style={{ fontFamily: 'JetBrains Mono, monospace', fontSize: '0.9375rem', fontWeight: 600, color: ACCENT, marginBottom: 8, textAlign: 'center' }}>
               Q₁(x, y) = {fmtFormStr(a, b, c)}
             </div>
             <div dangerouslySetInnerHTML={{ __html: svg1 }} onClick={handleSvgClick} style={{ cursor: 'crosshair' }} />
           </div>
-          <div style={{ flex: 1, minWidth: 300 }}>
-            <div style={{ fontFamily: 'JetBrains Mono, monospace', fontSize: 15, fontWeight: 600, color: ACCENT2, marginBottom: 8, textAlign: 'center' }}>
+          <div style={{ flex: 1, minWidth: 0 }}>
+            <div style={{ fontFamily: 'JetBrains Mono, monospace', fontSize: '0.9375rem', fontWeight: 600, color: ACCENT2, marginBottom: 8, textAlign: 'center' }}>
               Q₂(x, y) = {fmtFormStr(eqA2, eqB2, eqC2)}
             </div>
             <div dangerouslySetInnerHTML={{ __html: svg2 }} />
           </div>
         </div>
-        <div style={{ marginTop: 12, padding: '10px 16px', background: BG_CARD,
+        <div style={{ flexShrink: 0, marginTop: 12, padding: '10px 16px', background: BG_CARD,
                       borderRadius: 8, border: '1px solid #1e1e3a',
-                      fontFamily: 'JetBrains Mono, monospace', fontSize: 14, color: eqCol }}>
+                      fontFamily: 'JetBrains Mono, monospace', fontSize: '0.875rem', color: eqCol }}>
           {eqWord} — {reason}
         </div>
-      </>
+      </div>
     );
   } else {
     svgStr = drawTopographSvg({ ...commonParams, mode: md });
@@ -146,35 +146,35 @@ export default function TopographCanvas() {
   }
 
   const btnStyleActive = {
-    background: ACCENT, color: '#0d0d1a', fontFamily: 'JetBrains Mono, monospace',
-    fontSize: 11, fontWeight: 700, letterSpacing: 1, border: `1px solid ${ACCENT}`,
-    borderRadius: 6, padding: '4px 12px', cursor: 'pointer',
+    background: ACCENT, color: '#0d0d1a',
+    fontSize: '0.875rem', fontWeight: 700, letterSpacing: 1, border: `1px solid ${ACCENT}`,
+    borderRadius: 6, padding: '5px 16px', cursor: 'pointer',
   } as React.CSSProperties;
   const btnStyleIdle = {
-    background: BG_CARD, color: TEXT_DIM, fontFamily: 'JetBrains Mono, monospace',
-    fontSize: 11, fontWeight: 600, letterSpacing: 1, border: '1px solid #2a2a5a',
-    borderRadius: 6, padding: '4px 12px', cursor: 'pointer',
+    background: BG_CARD, color: UI_TEXT,
+    fontSize: '0.875rem', fontWeight: 600, letterSpacing: 1, border: '1px solid #2a2a5a',
+    borderRadius: 6, padding: '5px 16px', cursor: 'pointer',
   } as React.CSSProperties;
   const btnSubActive = {
-    background: 'transparent', color: ACCENT, fontFamily: 'JetBrains Mono, monospace',
-    fontSize: 11, fontWeight: 700, border: 'none', borderBottom: `2px solid ${ACCENT}`,
-    borderRadius: 0, padding: '4px 16px', cursor: 'pointer',
+    background: 'transparent', color: ACCENT,
+    fontSize: '0.875rem', fontWeight: 700, border: 'none', borderBottom: `2px solid ${ACCENT}`,
+    borderRadius: 0, padding: '5px 20px', cursor: 'pointer',
   } as React.CSSProperties;
   const btnSubIdle = {
-    background: 'transparent', color: TEXT_DIM, fontFamily: 'JetBrains Mono, monospace',
-    fontSize: 11, fontWeight: 600, border: 'none', borderBottom: '2px solid transparent',
-    borderRadius: 0, padding: '4px 16px', cursor: 'pointer',
+    background: 'transparent', color: UI_TEXT,
+    fontSize: '0.875rem', fontWeight: 600, border: 'none', borderBottom: '2px solid transparent',
+    borderRadius: 0, padding: '5px 20px', cursor: 'pointer',
   } as React.CSSProperties;
 
   const formEq = formatForm(Math.round(a), Math.round(b), Math.round(c));
 
   return (
     <div style={{ flex: 1, padding: 24, minWidth: 0, overflow: 'hidden',
-                  height: '100vh', position: 'sticky', top: 0, background: BG_DEEP,
+                  height: '100vh', position: 'sticky', top: 0, zIndex: 1, background: BG_DEEP,
                   display: 'flex', flexDirection: 'column', boxSizing: 'border-box' }}>
 
       {/* Mode toggle row */}
-      <div style={{ display: 'flex', gap: 8, marginBottom: 4, justifyContent: 'center' }}>
+      <div style={{ display: 'flex', gap: 8, marginBottom: 10, justifyContent: 'center' }}>
         {MODE_OPTS.map(([mval, mlbl]) => (
           <button key={mval} onClick={() => onMode(mval)}
                   style={mainTab === mval ? btnStyleActive : btnStyleIdle}>
@@ -198,34 +198,34 @@ export default function TopographCanvas() {
         <div style={{ marginBottom: 16 }} />
       )}
 
-      {/* Equation title row */}
-      {md !== 'equiv' && (
-        <div style={{ display: 'flex', alignItems: 'center', marginBottom: 12 }}>
-          <div style={{ flex: 1 }} />
-          <span style={{ fontFamily: 'JetBrains Mono, monospace', fontSize: 16,
+      {/* Equation title row — always visible for layout/fullscreen buttons */}
+      <div style={{ display: 'flex', alignItems: 'center', marginBottom: 12 }}>
+        <div style={{ flex: 1 }} />
+        {md !== 'equiv' && (
+          <span style={{ fontFamily: 'JetBrains Mono, monospace', fontSize: '1rem',
                           fontWeight: 'bold', color: ACCENT }}>
             {formEq}
           </span>
-          <div style={{ flex: 1, display: 'flex', justifyContent: 'flex-end', gap: 4 }}>
-            {LAYOUT_BTNS.map(([lval, lbl, hint]) => (
-              <button key={lval} title={hint}
-                      onClick={() => setLayoutMode(lval as any)}
-                      style={{ minWidth: 32, height: 32, padding: '0 6px', fontSize: 15,
-                               background: BG_CARD, cursor: 'pointer', border: 'none', borderRadius: 4,
-                               color: layoutMode === lval ? ACCENT : TEXT_DIM }}>
-                {lbl}
-              </button>
-            ))}
-            <button title={topoFullscreen ? 'Exit fullscreen' : 'Fullscreen'}
-                    onClick={() => setTopoFullscreen(!topoFullscreen)}
-                    style={{ minWidth: 32, height: 32, padding: '0 6px', fontSize: 15,
+        )}
+        <div style={{ flex: 1, display: 'flex', justifyContent: 'flex-end', gap: 4 }}>
+          {LAYOUT_BTNS.map(([lval, lbl, hint]) => (
+            <button key={lval} title={hint}
+                    onClick={() => setLayoutMode(lval as any)}
+                    style={{ minWidth: 32, height: 32, padding: '0 6px', fontSize: '0.9375rem',
                              background: BG_CARD, cursor: 'pointer', border: 'none', borderRadius: 4,
-                             color: topoFullscreen ? ACCENT : TEXT_DIM }}>
-              {topoFullscreen ? '✕' : '⛶'}
+                             color: layoutMode === lval ? ACCENT : UI_TEXT }}>
+              {lbl}
             </button>
-          </div>
+          ))}
+          <button title={topoFullscreen ? 'Exit fullscreen' : 'Fullscreen'}
+                  onClick={() => setTopoFullscreen(!topoFullscreen)}
+                  style={{ minWidth: 32, height: 32, padding: '0 6px', fontSize: '0.9375rem',
+                           background: BG_CARD, cursor: 'pointer', border: 'none', borderRadius: 4,
+                           color: topoFullscreen ? ACCENT : UI_TEXT }}>
+            {topoFullscreen ? '✕' : '⛶'}
+          </button>
         </div>
-      )}
+      </div>
 
       {/* Canvas */}
       <div className="topo-svg-wrap" style={{ flex: 1, minHeight: 0, display: 'flex',
@@ -235,13 +235,21 @@ export default function TopographCanvas() {
       </div>
 
       {/* Fullscreen overlay */}
-      {topoFullscreen && svgStr && (
+      {topoFullscreen && (
         <div style={{ position: 'fixed', left: 0, top: 0, width: '100vw', height: '100vh',
-                      zIndex: 9999, background: BG_DEEP, display: 'flex',
-                      alignItems: 'center', justifyContent: 'center', overflow: 'hidden' }}>
-          <div style={{ maxWidth: '100vw', maxHeight: '100vh', aspectRatio: ar, width: '100vw' }}
-               dangerouslySetInnerHTML={{ __html: svgStr }}
-               onClick={handleSvgClick} />
+                      zIndex: 9999, background: BG_DEEP, display: 'flex', flexDirection: 'column',
+                      alignItems: 'center', justifyContent: 'center', overflow: 'hidden',
+                      padding: 24, boxSizing: 'border-box' }}>
+          {svgStr ? (
+            <div style={{ maxWidth: '100vw', maxHeight: '100vh', aspectRatio: ar, width: '100vw' }}
+                 dangerouslySetInnerHTML={{ __html: svgStr }}
+                 onClick={handleSvgClick} />
+          ) : (
+            <div style={{ width: '100%', height: '100%', display: 'flex', flexDirection: 'column',
+                          minHeight: 0 }}>
+              {svgContent}
+            </div>
+          )}
           <button onClick={() => setTopoFullscreen(false)}
                   style={{ position: 'fixed', top: 12, right: 16, zIndex: 10000,
                            minWidth: 36, height: 36, padding: '0 8px', fontSize: 15,

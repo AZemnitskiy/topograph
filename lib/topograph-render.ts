@@ -13,6 +13,7 @@ import { discriminant, classify } from './topograph-math';
 // Colour palette (matches the Python original exactly)
 // ---------------------------------------------------------------------------
 
+export const UI_TEXT   = '#acbbe5';   // UI label / button text
 export const BG_DEEP   = '#0d0d1a';
 export const BG_PANEL  = '#13132b';
 export const BG_CARD   = '#1a1a3a';
@@ -584,7 +585,8 @@ export function drawTopographSvg(params: DrawParams): string {
     }
   }
 
-  // Selected-cell popup
+  // Selected-cell popup — collected separately so it always renders on top
+  const popupParts: string[] = [];
   if (selKey && facePos.has(selKey)) {
     const [sp, sq] = selKey.split(',').map(Number);
     const sv = faceVal.get(selKey)!;
@@ -613,18 +615,19 @@ export function drawTopographSvg(params: DrawParams): string {
     const by = Math.max(6, Math.min(scy - ph / 2, H - ph - 6));
     if (bx + pw > W - 6) bx = scx - pw - 34;
 
-    o.push('<g id="topo-cell-popup">');
-    o.push(`<rect x="${bx.toFixed(0)}" y="${by.toFixed(0)}" width="${pw}" height="${ph.toFixed(0)}" rx="7" fill="#13132b" stroke="${popupCol}" stroke-width="1.5" opacity="0.97"/>`);
+    popupParts.push('<g id="topo-cell-popup">');
+    popupParts.push(`<rect x="${bx.toFixed(0)}" y="${by.toFixed(0)}" width="${pw}" height="${ph.toFixed(0)}" rx="7" fill="#13132b" stroke="${popupCol}" stroke-width="1.5" opacity="0.97"/>`);
     for (let i = 0; i < rows.length; i++) {
       const [rtxt, rcol, rfz, rfw] = rows[i];
       const ty = by + pady + i * lh + rfz * 0.85;
-      o.push(`<text x="${(bx + padx).toFixed(0)}" y="${ty.toFixed(1)}" font-family="JetBrains Mono,monospace" font-size="${rfz}" font-weight="${rfw}" fill="${rcol}">${esc(rtxt)}</text>`);
+      popupParts.push(`<text x="${(bx + padx).toFixed(0)}" y="${ty.toFixed(1)}" font-family="JetBrains Mono,monospace" font-size="${rfz}" font-weight="${rfw}" fill="${rcol}">${esc(rtxt)}</text>`);
     }
-    o.push('</g>');
+    popupParts.push('</g>');
   }
 
   if (poincare) {
     o.push('</g>');
+    // Boundary circle rendered before popup so popup is always on top
     o.push(`<circle cx="${(W/2).toFixed(1)}" cy="${(H/2).toFixed(1)}" r="${discR.toFixed(1)}" fill="none" stroke="${ACCENT}" stroke-width="1.5"/>`);
   }
 
@@ -696,6 +699,9 @@ export function drawTopographSvg(params: DrawParams): string {
       o.push(`<text x="${jx.toFixed(1)}" y="${jy.toFixed(1)}" dominant-baseline="central" text-anchor="middle" fill="#ffb300" font-family="JetBrains Mono,monospace" font-size="9" font-weight="700" pointer-events="none">${jnode}</text>`);
     }
   }
+
+  // Popup always on top of everything (including Poincaré boundary circle)
+  for (const part of popupParts) o.push(part);
 
   o.push('</svg>');
   return o.join('');

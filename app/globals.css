@@ -4,6 +4,11 @@
 
 *, *::before, *::after { box-sizing: border-box; }
 
+html {
+  /* Scales smoothly from ~14px on small viewports to 17px on 1600px+ */
+  font-size: clamp(14px, 0.9vw + 4px, 17px);
+}
+
 html, body {
   margin: 0; padding: 0;
   background: #0d0d1a;

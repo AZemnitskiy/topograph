@@ -4,7 +4,7 @@ import React from 'react';
 import { useStore, useDisplayValues, type Mode, type TutorialData } from '../store/state';
 import {
   ACCENT, ACCENT2, TEXT, TEXT_DIM, BG_CARD, GREEN, RED_COL, ORANGE, LIME,
-  fmtVal, esc,
+  UI_TEXT, fmtVal, esc,
 } from '../lib/topograph-render';
 import { Q as Qeval, discriminant, classify, areEquivalent, reduceForm } from '../lib/topograph-math';
 
@@ -20,8 +20,8 @@ function SliderInt({ label, value, min, max, onChange }: {
     <div style={{ marginBottom: 6 }}>
       {label && (
         <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 2 }}>
-          <span style={{ color: TEXT_DIM, fontSize: 11, fontFamily: 'JetBrains Mono, monospace' }}>{label}</span>
-          <span style={{ color: ACCENT, fontSize: 11, fontFamily: 'JetBrains Mono, monospace' }}>{value}</span>
+          <span style={{ color: UI_TEXT, fontSize: '0.8125rem', fontWeight: 600 }}>{label}</span>
+          <span style={{ color: ACCENT, fontSize: '0.8125rem', fontWeight: 600 }}>{value}</span>
         </div>
       )}
       <input
@@ -38,7 +38,7 @@ function Checkbox({ label, checked, onChange }: {
 }) {
   return (
     <label style={{ display: 'flex', alignItems: 'center', gap: 8, cursor: 'pointer',
-                    color: TEXT, fontSize: 12, fontFamily: 'JetBrains Mono, monospace',
+                    color: UI_TEXT, fontSize: '0.9375rem',
                     marginBottom: 6 }}>
       <input type="checkbox" checked={checked} onChange={e => onChange(e.target.checked)}
              style={{ accentColor: ACCENT, width: 14, height: 14, cursor: 'pointer' }} />
@@ -48,13 +48,13 @@ function Checkbox({ label, checked, onChange }: {
 }
 
 function Divider() {
-  return <hr style={{ border: 'none', borderTop: `1px solid #2a2a5a`, margin: '8px 0' }} />;
+  return <hr style={{ border: 'none', borderTop: `1px solid #2a2a5a`, margin: '14px 0' }} />;
 }
 
 function SectionLabel({ children, style }: { children: React.ReactNode; style?: React.CSSProperties }) {
   return (
-    <div style={{ fontSize: 10, fontFamily: 'JetBrains Mono, monospace', color: TEXT_DIM,
-                  letterSpacing: 2, textTransform: 'uppercase', marginBottom: 6, marginTop: 4, ...style }}>
+    <div style={{ fontSize: '0.75rem', color: UI_TEXT,
+                  fontWeight: 700, letterSpacing: 2, textTransform: 'uppercase', marginBottom: 8, marginTop: 6, ...style }}>
       {children}
     </div>
   );
@@ -63,7 +63,7 @@ function SectionLabel({ children, style }: { children: React.ReactNode; style?: 
 function ResultCard({ children }: { children: React.ReactNode }) {
   return (
     <div style={{ background: BG_CARD, border: '1px solid #1e1e3a', borderRadius: 7,
-                  padding: '7px 10px', marginTop: 4, fontSize: 11,
+                  padding: '7px 10px', marginTop: 4, fontSize: '0.75rem',
                   fontFamily: 'JetBrains Mono, monospace' }}>
       {children}
     </div>
@@ -85,9 +85,9 @@ function TutorialSelect({ options, value, onChange }: {
       value={value ?? ''}
       onChange={e => onChange(e.target.value)}
       style={{
-        width: '100%', background: '#0d0d20', color: TEXT,
+        width: '100%', background: '#0d0d20', color: UI_TEXT,
         border: '1px solid #2a2a5a', borderRadius: 6, padding: '6px 8px',
-        fontFamily: 'JetBrains Mono, monospace', fontSize: 11, cursor: 'pointer',
+        fontSize: '0.875rem', cursor: 'pointer',
       }}
     >
       <option value="">— Select tutorial —</option>
@@ -195,9 +195,9 @@ export default function Sidebar({
       {/* Header */}
       <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 8, marginBottom: 4 }}>
         <div>
-          <div style={{ fontFamily: 'JetBrains Mono, monospace', fontSize: 18, fontWeight: 600,
+          <div style={{ fontFamily: 'JetBrains Mono, monospace', fontSize: '1.5rem', fontWeight: 600,
                         color: ACCENT, letterSpacing: 2, marginBottom: 2 }}>TOPOGRAPH</div>
-          <div style={{ fontFamily: 'JetBrains Mono, monospace', fontSize: 10, color: TEXT_DIM,
+          <div style={{ fontSize: '0.875rem', color: UI_TEXT,
                         letterSpacing: 1 }}>Binary Quadratic Form Explorer</div>
         </div>
         {cogSvg}
@@ -207,7 +207,8 @@ export default function Sidebar({
       <SectionLabel>Tutorials</SectionLabel>
       <TutorialSelect options={tutorialOptions} value={tutorialFile} onChange={onFileSelect} />
 
-      <SectionLabel style={{ marginTop: 10 }}>Depth</SectionLabel>
+      <Divider />
+      <SectionLabel>Depth</SectionLabel>
       <SliderInt label="" value={dep} min={1} max={7} onChange={onDepth} />
 
       <Divider />
@@ -226,14 +227,14 @@ export default function Sidebar({
       {/* Discriminant card */}
       <ResultCard>
         <span style={{ color: TEXT_DIM }}>D = b²−4ac = </span>
-        <span style={{ color: dCol, fontSize: 13, fontWeight: 600 }}>{Math.round(disc)}</span>
+        <span style={{ color: dCol, fontSize: '0.8125rem', fontWeight: 600 }}>{Math.round(disc)}</span>
         <span style={{ color: TEXT_DIM }}> ({clsName})</span>
       </ResultCard>
 
       {/* Home triad */}
       <ResultCard>
         <span style={{ color: TEXT_DIM }}>Home triad:&nbsp;</span>
-        <span style={{ color: ACCENT, fontFamily: 'JetBrains Mono, monospace', fontSize: 12 }}>
+        <span style={{ color: ACCENT, fontFamily: 'JetBrains Mono, monospace', fontSize: '0.75rem' }}>
           Q(1,0)={fmtVal(v10)}&nbsp; Q(0,1)={fmtVal(v01)}&nbsp; Q(1,1)={fmtVal(v11)}
         </span>
       </ResultCard>
@@ -247,8 +248,8 @@ export default function Sidebar({
           return (
             <ResultCard>
               <span style={{ color: TEXT_DIM }}>Reduced form: </span>
-              <span style={{ color: LIME, fontFamily: 'JetBrains Mono, monospace', fontSize: 12 }}>{redStr}</span>
-              {isReduced && <span style={{ color: '#8899cc', fontSize: 10 }}> (already reduced)</span>}
+              <span style={{ color: LIME, fontFamily: 'JetBrains Mono, monospace', fontSize: '0.75rem' }}>{redStr}</span>
+              {isReduced && <span style={{ color: '#8899cc', fontSize: '0.625rem' }}> (already reduced)</span>}
             </ResultCard>
           );
         } catch { return null; }
@@ -264,7 +265,7 @@ export default function Sidebar({
           <SliderInt label="c₂" value={eqC2} min={-9} max={9} onChange={v => setEqC2(v)} />
           {eqResult && (
             <ResultCard>
-              <span style={{ color: eqResult.ok ? GREEN : RED_COL, fontWeight: 600, fontSize: 13 }}>
+              <span style={{ color: eqResult.ok ? GREEN : RED_COL, fontWeight: 600, fontSize: '0.8125rem' }}>
                 {eqResult.ok ? 'EQUIVALENT' : 'NOT equivalent'}
               </span>
               <br />

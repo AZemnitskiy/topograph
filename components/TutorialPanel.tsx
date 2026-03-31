@@ -1,10 +1,10 @@
 'use client';
 
-import React from 'react';
+import React, { useRef, useState } from 'react';
 import ReactMarkdown from 'react-markdown';
 import { useStore } from '../store/state';
 import {
-  ACCENT, TEXT, TEXT_DIM, BG_CARD, GREEN, RED_COL,
+  ACCENT, TEXT, TEXT_DIM, BG_CARD, GREEN, RED_COL, UI_TEXT,
 } from '../lib/topograph-render';
 
 // ---------------------------------------------------------------------------
@@ -25,7 +25,7 @@ function TutText({ text }: { text: string }) {
 
   return (
     <div className="tut-view-text" style={{
-      fontFamily: 'JetBrains Mono, monospace', fontSize: 13, lineHeight: 1.75,
+      fontFamily: 'JetBrains Mono, monospace', fontSize: '0.8125rem', lineHeight: 1.75,
       color: '#c0c8e8',
     }}>
       <ReactMarkdown>{mdHardBreaks(text)}</ReactMarkdown>
@@ -42,6 +42,27 @@ export default function TutorialPanel({
 }: {
   tutorialNames: string[];
 }) {
+  const [panelWidth, setPanelWidth] = useState(420);
+  const dragState = useRef<{ startX: number; startW: number } | null>(null);
+
+  function onResizeStart(e: React.MouseEvent) {
+    e.preventDefault();
+    dragState.current = { startX: e.clientX, startW: panelWidth };
+
+    function onMove(ev: MouseEvent) {
+      if (!dragState.current) return;
+      const delta = dragState.current.startX - ev.clientX;
+      setPanelWidth(Math.max(280, Math.min(700, dragState.current.startW + delta)));
+    }
+    function onUp() {
+      dragState.current = null;
+      window.removeEventListener('mousemove', onMove);
+      window.removeEventListener('mouseup', onUp);
+    }
+    window.addEventListener('mousemove', onMove);
+    window.addEventListener('mouseup', onUp);
+  }
+
   const {
     tutorialData, tutorialIdx, tutorialFile,
     quizMode, quizAnswer, readingMode,
@@ -122,42 +143,55 @@ export default function TutorialPanel({
   const panelStyle: React.CSSProperties = readingMode
     ? { position: 'fixed', zIndex: 9999, top: 0, left: 0, width: '100vw', height: '100vh',
         background: '#06060f', padding: '24px 32px', boxSizing: 'border-box', overflowY: 'auto' }
-    : { position: 'relative', minWidth: 320, width: 420, height: '100vh', background: '#06060f',
+    : { position: 'relative', minWidth: 280, width: panelWidth, height: '100vh', background: '#06060f',
         borderLeft: '1px solid #1a1a3a', overflowY: 'auto', padding: '16px 16px',
         boxSizing: 'border-box', flexShrink: 0 };
 
   return (
     <div className="tutorial-panel" style={panelStyle}>
-      {/* Header row */}
-      <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 0 }}>
-        <div style={{ flex: 1, minWidth: 0 }}>
-          <div style={{ fontFamily: 'JetBrains Mono, monospace', fontSize: 17, fontWeight: 600,
-                        color: ACCENT, letterSpacing: 1, marginBottom: 2 }}>
-            {tutNum ? `${tutNum}. ` : ''}{tutorialData.title}
-          </div>
-          {tutorialData.book && (
-            <div style={{ fontFamily: 'JetBrains Mono, monospace', fontSize: 11, color: TEXT_DIM }}>
-              {tutorialData.book}
-            </div>
-          )}
+      {/* Drag-to-resize handle on left edge */}
+      {!readingMode && (
+        <div
+          onMouseDown={onResizeStart}
+          style={{
+            position: 'absolute', left: 0, top: 0, bottom: 0, width: 5,
+            cursor: 'col-resize', zIndex: 10, background: 'transparent',
+            transition: 'background 0.15s',
+          }}
+          onMouseEnter={e => { e.currentTarget.style.background = '#3a3a7a'; }}
+          onMouseLeave={e => { e.currentTarget.style.background = 'transparent'; }}
+        />
+      )}
+      {/* Tutorial title */}
+      <div style={{ marginBottom: 8 }}>
+        <div style={{ fontFamily: 'JetBrains Mono, monospace', fontSize: '1.375rem', fontWeight: 600,
+                      color: ACCENT, letterSpacing: 1, marginBottom: 2 }}>
+          {tutNum ? `${tutNum}. ` : ''}{tutorialData.title}
         </div>
-        <div style={{ fontFamily: 'JetBrains Mono, monospace', fontSize: 11, color: TEXT_DIM,
-                      whiteSpace: 'nowrap' }}>
+        {tutorialData.book && (
+          <div style={{ fontSize: '0.875rem', color: UI_TEXT }}>
+            {tutorialData.book}
+          </div>
+        )}
+      </div>
+      {/* Nav row */}
+      <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+        <div style={{ fontSize: '0.6875rem', color: UI_TEXT, flex: 1 }}>
           {counter}
         </div>
         <button onClick={goPrev} disabled={prevDisabled} title="Previous"
-                style={{ minWidth: 36, height: 36, padding: '0 8px', fontSize: 16,
+                style={{ minWidth: 36, height: 36, padding: '0 8px', fontSize: '1rem',
                          background: BG_CARD, border: 'none', borderRadius: 6, cursor: 'pointer',
-                         color: prevDisabled ? TEXT_DIM : TEXT }}>◀</button>
+                         color: prevDisabled ? TEXT_DIM : UI_TEXT }}>◀</button>
         <button onClick={goNext} disabled={nextDisabled} title="Next"
-                style={{ minWidth: 36, height: 36, padding: '0 8px', fontSize: 16,
+                style={{ minWidth: 36, height: 36, padding: '0 8px', fontSize: '1rem',
                          background: BG_CARD, border: 'none', borderRadius: 6, cursor: 'pointer',
-                         color: nextDisabled ? TEXT_DIM : TEXT }}>▶</button>
+                         color: nextDisabled ? TEXT_DIM : UI_TEXT }}>▶</button>
         <button onClick={() => setReadingMode(!readingMode)}
                 title={readingMode ? 'Exit focus' : 'Focus mode'}
-                style={{ minWidth: 36, height: 36, padding: '0 8px', fontSize: 15,
+                style={{ minWidth: 36, height: 36, padding: '0 8px', fontSize: '0.9375rem',
                          background: BG_CARD, border: 'none', borderRadius: 6, cursor: 'pointer',
-                         color: readingMode ? ACCENT : TEXT_DIM }}>
+                         color: readingMode ? ACCENT : UI_TEXT }}>
           {readingMode ? '✕' : '⛶'}
         </button>
       </div>
@@ -166,7 +200,7 @@ export default function TutorialPanel({
 
       {/* View title */}
       {view.title && (
-        <div style={{ fontFamily: 'JetBrains Mono, monospace', fontSize: 19, fontWeight: 600,
+        <div style={{ fontFamily: 'JetBrains Mono, monospace', fontSize: '1.1875rem', fontWeight: 600,
                       color: '#ffffff', marginBottom: 10, paddingBottom: 10,
                       borderBottom: '1px solid #2a2a5a' }}>
           {view.title}
@@ -179,7 +213,7 @@ export default function TutorialPanel({
         <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
           {view.activity && (
             <div style={boxStyle}>
-              <div style={{ fontFamily: 'JetBrains Mono, monospace', fontSize: 13,
+              <div style={{ fontSize: '0.8125rem',
                             fontWeight: 700, letterSpacing: 1.5, color: ACCENT,
                             textTransform: 'uppercase', marginBottom: 8 }}>
                 ▸ Activity
@@ -191,7 +225,7 @@ export default function TutorialPanel({
             <div style={boxStyle}>
               <div style={{ display: 'flex', justifyContent: 'space-between',
                             alignItems: 'center', marginBottom: 8 }}>
-                <span style={{ fontFamily: 'JetBrains Mono, monospace', fontSize: 13,
+                <span style={{ fontSize: '0.8125rem',
                                fontWeight: 700, letterSpacing: 1.5, color: '#7986cb',
                                textTransform: 'uppercase' }}>▸ Quiz</span>
                 {answered && (
@@ -201,11 +235,11 @@ export default function TutorialPanel({
                   </span>
                 )}
               </div>
-              <div style={{ fontFamily: 'JetBrains Mono, monospace', fontSize: 13.5,
+              <div style={{ fontFamily: 'JetBrains Mono, monospace', fontSize: '0.844rem',
                             color: '#c0c8e8', lineHeight: 1.7, marginBottom: 10 }}>
                 {quiz.question}
               </div>
-              <div style={{ fontFamily: 'JetBrains Mono, monospace', fontSize: 13.5,
+              <div style={{ fontFamily: 'JetBrains Mono, monospace', fontSize: '0.844rem',
                             color: '#c0c8e8', lineHeight: 1.8, marginBottom: 20 }}>
                 {quiz.options.map((opt, i) => (
                   <div key={i} style={{ margin: '3px 0' }}>
@@ -214,7 +248,7 @@ export default function TutorialPanel({
                 ))}
               </div>
               {answered && qExpl && (
-                <div style={{ fontFamily: 'JetBrains Mono, monospace', fontSize: 13.5,
+                <div style={{ fontFamily: 'JetBrains Mono, monospace', fontSize: '0.844rem',
                               color: qAns === qCorr ? GREEN : '#ef9a9a',
                               marginTop: 10, marginBottom: 20, lineHeight: 1.6 }}>
                   {qExpl}
@@ -231,7 +265,7 @@ export default function TutorialPanel({
                     <button key={qi} disabled={answered}
                             onClick={() => setQuizAnswer(qi)}
                             style={{ background: bg, color: col, border: `1px solid ${bdr}`,
-                                     fontFamily: 'JetBrains Mono, monospace', fontSize: 13,
+                                     fontFamily: 'JetBrains Mono, monospace', fontSize: '0.8125rem',
                                      fontWeight: 700, padding: '6px 14px', minWidth: 40,
                                      cursor: answered ? 'default' : 'pointer', borderRadius: 4 }}>
                       {LETTERS[qi]}
