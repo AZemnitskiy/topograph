@@ -25,15 +25,28 @@ Then open `http://localhost:3000` in your browser.
 
 ### Modes
 
-| Mode | Description |
-|------|-------------|
-| **Plain** | Standard topograph with optional sign coloring |
-| **Step** | Click any cell to inspect it; shows the arithmetic progression rule f = u + v − e and the cell's neighbours |
-| **River trace** | Gold wavy edges mark the river (sign-change boundary); blue gradient lakes highlight zero-value faces |
-| **Pell solutions** | River trace plus amber star glyphs on cells with value 1; dashed arcs connect consecutive solutions to reveal periodicity; solution list overlaid in the graph corner |
-| **Poincaré disc** | Renders the same form within the hyperbolic disc model |
+Two top-level tabs:
+
+| Tab | Description |
+|-----|-------------|
+| **Topograph** | Main view with three sub-tabs and layout controls |
 | **Equivalence** | Side-by-side comparison of two forms with a live equivalence check |
-| **Disc slider** | b-slider with live discriminant and classification update |
+
+Sub-tabs within **Topograph**:
+
+| Sub-tab | Description |
+|---------|-------------|
+| **Plain** | Standard topograph with optional sign coloring |
+| **River trace** | Gold wavy edges mark the river (sign-change boundary); blue gradient lakes highlight zero-value faces |
+| **Pell solutions** | River trace plus amber star glyphs on cells with value 1; dashed arcs connect consecutive solutions; solution list overlaid in the graph corner |
+
+Layout buttons (available in all Topograph sub-tabs):
+
+| Layout | Description |
+|--------|-------------|
+| **Tree ⊕** | Standard trivalent tree layout |
+| **Radial ◉** | Circular/radial arrangement of the tree |
+| **Poincaré disc ◎** | Renders the form within the hyperbolic disc model |
 
 ### Tutorial System
 - 8 pre-built JSON tutorials covering the Conway topograph from first principles
@@ -95,7 +108,7 @@ Add a `.json` file to `public/tutorials/` with this structure:
 
 **`form`** sets the a, b, c coefficients for that step.
 
-**`state.mode`** values: `"default"` · `"step"` · `"river"` · `"pell"` · `"poincare"` · `"equiv"` · `"disc_slider"`.
+**`state.mode`** values: `"default"` · `"river"` · `"pell"` · `"equiv"`.
 
 **`quiz`** is optional; omit the key to skip the quiz for that step.
 
