@@ -1,36 +1,118 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Binary Quadratic Form Topograph Explorer
 
-## Getting Started
+An interactive visualizer for binary quadratic forms built with [Next.js](https://nextjs.org) and React. Explore the Conway topograph, the river, Pell solutions, equivalence of forms, and the Poincaré disc — with a built-in tutorial system covering the theory from the ground up.
 
-First, run the development server:
+This is a full port of the original [Solara/Python explorer](../topograph_explorer) to a modern TypeScript/React stack.
+
+## Quick Start
 
 ```bash
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Then open `http://localhost:3000` in your browser.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Features
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+### Topograph View
+- **SVG topograph** — BFS-grown trivalent tree with lax vectors placed at superbase barycentres
+- **Sign map** — faces colored green (positive), red (negative), grey (zero) with live updates as you drag the a, b, c sliders
+- **Home triad** — the three seed values Q(1,0), Q(0,1), Q(−1,−1) highlighted at the root
+- **Vector labels** — toggle (p, q) coordinates on every face
+- **Depth slider** — grow or shrink the tree from depth 1 to 7
+- **Animations** — directional particles along tree edges and pulse rings on selected nodes (toggle via ⚙ button)
 
-## Learn More
+### Modes
 
-To learn more about Next.js, take a look at the following resources:
+| Mode | Description |
+|------|-------------|
+| **Plain** | Standard topograph with optional sign coloring |
+| **Step** | Click any cell to inspect it; shows the arithmetic progression rule f = u + v − e and the cell's neighbours |
+| **River trace** | Gold wavy edges mark the river (sign-change boundary); blue gradient lakes highlight zero-value faces |
+| **Pell solutions** | River trace plus amber star glyphs on cells with value 1; dashed arcs connect consecutive solutions to reveal periodicity; solution list overlaid in the graph corner |
+| **Poincaré disc** | Renders the same form within the hyperbolic disc model |
+| **Equivalence** | Side-by-side comparison of two forms with a live equivalence check |
+| **Disc slider** | b-slider with live discriminant and classification update |
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+### Tutorial System
+- 8 pre-built JSON tutorials covering the Conway topograph from first principles
+- Each tutorial step auto-configures the form, depth, mode, and display options
+- Reading mode (full-screen text), activity prompts, and multiple-choice quizzes per step
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Things to Try
 
-## Deploy on Vercel
+- Set **a=1, b=0, c=−1** (discriminant 4 > 0) → switch to **River trace**: a single straight river separates all positive from all negative faces
+- Set **a=1, b=2, c=−1** → switch to **Pell solutions**: find the repeating pattern of cells with value 1; these are solutions to the associated Pell equation x² + 2xy − y² = 1
+- Set **a=1, b=0, c=1** (discriminant −4 < 0) → the form is positive-definite: no river, all faces positive
+- Set **a=2, b=2, c=−1** → **Equivalence** mode: compare with **a=1, b=0, c=−2**; both have discriminant 12 and reduce to the same form
+- Switch to **Poincaré disc** for any indefinite form and watch the river become a geodesic
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Tutorial Files
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Tutorials live in `public/tutorials/` as JSON files and load automatically on startup. Use the dropdown in the sidebar to switch between them.
+
+| File | Title | Views | Topics |
+|------|-------|-------|--------|
+| `01_home_triad.json` | The Home Triad | 4 | Seed values, Q(1,0)/Q(0,1)/Q(−1,−1), the root superbase |
+| `02_arithmetic_progression.json` | The Arithmetic Progression Rule | 4 | How each face is determined by its two parents: f = u + v − e |
+| `03_sign_map_river.json` | Sign Map and the River | 4 | Positive/negative/zero faces; the river as the sign-change boundary |
+| `04_discriminant.json` | The Discriminant | 4 | D = b²−4ac; definite vs indefinite forms; how D controls the river |
+| `05_definite_forms.json` | Positive-Definite Forms | 4 | D < 0 forms, no river, minimum value, reduced forms |
+| `06_indefinite_pell.json` | Indefinite Forms and Pell's Equation | 4 | D > 0 forms, periodic river, Pell solutions as value-1 cells |
+| `07_equivalence.json` | Equivalence of Forms | 4 | SL₂(ℤ) action, reduced forms, same discriminant ↔ equivalent |
+| `08_poincare_disc.json` | The Poincaré Disc View | 3 | Hyperbolic geometry, geodesics, the river as a hyperbolic line |
+
+### Writing Your Own Tutorials
+
+Add a `.json` file to `public/tutorials/` with this structure:
+
+```json
+{
+  "title": "Tutorial Title",
+  "views": [
+    {
+      "title": "Step Title",
+      "text": "Explanatory text...",
+      "activity": "Something for the reader to try...",
+      "form": { "a": 1, "b": 0, "c": -1 },
+      "state": {
+        "depth": 4,
+        "show_signs": true,
+        "mode": "river",
+        "highlight_home": true
+      },
+      "quiz": {
+        "question": "Question text?",
+        "options": ["A", "B", "C", "D"],
+        "correct": 0,
+        "explanation": "Because..."
+      }
+    }
+  ]
+}
+```
+
+**`form`** sets the a, b, c coefficients for that step.
+
+**`state.mode`** values: `"default"` · `"step"` · `"river"` · `"pell"` · `"poincare"` · `"equiv"` · `"disc_slider"`.
+
+**`quiz`** is optional; omit the key to skip the quiz for that step.
+
+## Project Structure
+
+```
+app/                — Next.js app router (layout, page, globals.css)
+components/         — React UI components (Sidebar, TopographCanvas, TutorialPanel)
+lib/                — Core math and rendering (topograph-math.ts, topograph-render.ts, topograph-core.ts)
+store/              — Zustand global state (state.ts)
+public/tutorials/   — JSON tutorial files (01–08)
+```
+
+## Dependencies
+
+- [Next.js](https://nextjs.org) 16 — React framework with App Router
+- [React](https://react.dev) 19 — UI library
+- [Zustand](https://zustand-demo.pmnd.rs) 5 — lightweight global state
+- [react-markdown](https://github.com/remarkjs/react-markdown) — tutorial text rendering
+- [Tailwind CSS](https://tailwindcss.com) 4 — utility CSS
