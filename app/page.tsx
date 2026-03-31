@@ -1,65 +1,166 @@
-import Image from "next/image";
+'use client';
 
-export default function Home() {
+import React, { useEffect, useRef, useState } from 'react';
+import { useStore } from '../store/state';
+import Sidebar from '../components/Sidebar';
+import TopographCanvas from '../components/TopographCanvas';
+import TutorialPanel from '../components/TutorialPanel';
+import { BG_DEEP, BG_CARD, ACCENT, TEXT, TEXT_DIM } from '../lib/topograph-render';
+
+// ---------------------------------------------------------------------------
+// Tutorial file manifest — must match public/tutorials/
+// ---------------------------------------------------------------------------
+
+const TUTORIAL_FILES = [
+  '01_home_triad.json',
+  '02_arithmetic_progression.json',
+  '03_sign_map_river.json',
+  '04_discriminant.json',
+  '05_definite_forms.json',
+  '06_indefinite_pell.json',
+  '07_equivalence.json',
+  '08_poincare_disc.json',
+];
+
+// ---------------------------------------------------------------------------
+// AnimationDialog
+// ---------------------------------------------------------------------------
+
+function AnimationDialog({ onClose }: { onClose: () => void }) {
+  const {
+    animParticles, animPulses, showNodeLabels,
+    setAnimParticles, setAnimPulses, setShowNodeLabels,
+  } = useStore();
+
   return (
-    <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
+    <div className="anim-dialog-overlay" onClick={e => e.target === e.currentTarget && onClose()}>
+      <div className="anim-dialog">
+        <div style={{ fontFamily: 'JetBrains Mono, monospace', fontSize: 16,
+                      fontWeight: 600, color: ACCENT, marginBottom: 16 }}>
+          Animation Controls
         </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
+        <div style={{ fontFamily: 'JetBrains Mono, monospace', fontSize: 11,
+                      color: TEXT_DIM, marginBottom: 14, lineHeight: 1.6 }}>
+          Toggle individual animation layers in the topograph.
         </div>
-      </main>
+        {[
+          ['Particle streams', animParticles, setAnimParticles, 'Glowing dots flowing along tree arrows'],
+          ['Node pulse rings', animPulses, setAnimPulses, 'Expanding glow rings on selected node'],
+          ['Junction node indices', showNodeLabels, setShowNodeLabels, 'Ordinal labels at each junction vertex'],
+        ].map(([label, value, setter, hint]) => (
+          <div key={label as string} style={{ marginBottom: 12 }}>
+            <label style={{ display: 'flex', alignItems: 'center', gap: 8, cursor: 'pointer',
+                            color: TEXT, fontSize: 13, fontFamily: 'JetBrains Mono, monospace' }}>
+              <input type="checkbox" checked={value as boolean}
+                     onChange={e => (setter as (v: boolean) => void)(e.target.checked)}
+                     style={{ accentColor: ACCENT, width: 14, height: 14 }} />
+              {label as string}
+            </label>
+            <div style={{ fontSize: 10, color: TEXT_DIM, marginLeft: 22,
+                          fontFamily: 'JetBrains Mono, monospace', marginTop: 2 }}>
+              {hint as string}
+            </div>
+          </div>
+        ))}
+        <div style={{ display: 'flex', justifyContent: 'flex-end', marginTop: 16 }}>
+          <button onClick={onClose}
+                  style={{ background: ACCENT, color: '#0d0d1a', border: 'none',
+                           borderRadius: 6, padding: '6px 18px', cursor: 'pointer',
+                           fontFamily: 'JetBrains Mono, monospace', fontWeight: 700, fontSize: 12 }}>
+            Done
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+// ---------------------------------------------------------------------------
+// Page
+// ---------------------------------------------------------------------------
+
+export default function Page() {
+  const {
+    tutorialData, tutorialFile, tutorialIdx,
+    setTutorialData, setTutorialFile, setTutorialIdx,
+    setQuizAnswer, setQuizMode, applyView,
+    showAnimDialog, setShowAnimDialog,
+  } = useStore();
+
+  const [tutOptions, setTutOptions] = useState<{ fname: string; label: string }[]>([]);
+  const didAutoLoad = useRef(false);
+
+  // Fetch tutorial metadata for the dropdown
+  useEffect(() => {
+    Promise.all(
+      TUTORIAL_FILES.map(async fname => {
+        try {
+          const res = await fetch(`/tutorials/${fname}`);
+          const data = await res.json();
+          return { fname, label: data.title ?? fname };
+        } catch {
+          return { fname, label: fname };
+        }
+      })
+    ).then(opts => {
+      setTutOptions(opts.map((o, i) => ({ fname: o.fname, label: `${i + 1}. ${o.label}` })));
+    });
+  }, []);
+
+  // Load a tutorial JSON file
+  async function loadTutorial(fname: string, startAtEnd = false) {
+    try {
+      const res = await fetch(`/tutorials/${fname}`);
+      const data = await res.json();
+      const views = data.views ?? [];
+      const idx = startAtEnd && views.length ? views.length - 1 : 0;
+      setTutorialData(data);
+      setTutorialIdx(idx);
+      setTutorialFile(fname);
+      setQuizAnswer(null);
+      setQuizMode(false);
+      if (views.length > 0) applyView(views[idx]);
+    } catch (e) {
+      console.error('Failed to load tutorial', fname, e);
+    }
+  }
+
+  // Auto-load first tutorial
+  useEffect(() => {
+    if (!didAutoLoad.current && TUTORIAL_FILES.length > 0) {
+      didAutoLoad.current = true;
+      loadTutorial(TUTORIAL_FILES[0]);
+    }
+  }, []);
+
+  // Listen for tut-load events dispatched by TutorialPanel navigation
+  useEffect(() => {
+    function onTutLoad(e: Event) {
+      const { fname, startAtEnd } = (e as CustomEvent).detail;
+      loadTutorial(fname, startAtEnd);
+    }
+    window.addEventListener('tut-load', onTutLoad);
+    return () => window.removeEventListener('tut-load', onTutLoad);
+  }, []);
+
+  function onFileSelect(fname: string) {
+    if (fname) loadTutorial(fname);
+  }
+
+  return (
+    <div style={{
+      display: 'flex', flexDirection: 'row',
+      background: BG_DEEP, minHeight: '100vh',
+      alignItems: 'flex-start', gap: 0, margin: 0, padding: 0,
+    }}>
+      <Sidebar
+        tutorialOptions={tutOptions}
+        onFileSelect={onFileSelect}
+        onCogClick={() => setShowAnimDialog(true)}
+      />
+      <TopographCanvas />
+      {tutorialData && <TutorialPanel tutorialNames={TUTORIAL_FILES} />}
+      {showAnimDialog && <AnimationDialog onClose={() => setShowAnimDialog(false)} />}
     </div>
   );
 }

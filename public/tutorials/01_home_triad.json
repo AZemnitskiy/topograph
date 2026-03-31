@@ -1,0 +1,115 @@
+{
+  "title": "The Home Triad",
+  "book": "Conway — The Sensual Quadratic Form",
+  "views": [
+    {
+      "title": "What Is a Binary Quadratic Form?",
+      "text": "A **binary quadratic form** is a polynomial\n\nQ(x, y) = ax² + bxy + cy²\n\nwhere a, b, c are integers and x, y range over all integers. The form assigns an integer to every lattice point (x, y).\n\nExample: Q(x, y) = x² + y² takes the values 0 (at the origin), 1 (at (1,0) and (0,1)), 2 (at (1,1)), 4 (at (2,0)), 5 (at (2,1)), and so on.\n\nThe fundamental question in number theory: **which integers are represented by Q?** That is, for which integers n does the equation Q(x,y) = n have an integer solution?\n\nThe topograph is a visual device that answers this question at a glance.",
+      "form": {
+        "a": 1,
+        "b": 0,
+        "c": 1
+      },
+      "state": {
+        "depth": 2,
+        "show_signs": false,
+        "highlight_home": true,
+        "mode": "default"
+      },
+      "activity": "The form shown is Q(x,y) = x² + y². Its topograph is displayed to the right. Notice the values near the centre — these are Q(1,0) = 1, Q(0,1) = 1, Q(1,1) = 2. These three form the **home triad**.\n\nTry entering a = 2, b = 0, c = 3 and observe how the topograph changes.",
+      "quiz": {
+        "question": "For Q(x,y) = x² + y², what is Q(2, 1)?",
+        "options": [
+          "3",
+          "5",
+          "4",
+          "6"
+        ],
+        "correct": 1,
+        "explanation": "Q(2,1) = 2² + 1² = 4 + 1 = 5."
+      }
+    },
+    {
+      "title": "The Home Triad: Three Starting Values",
+      "text": "Every topograph is built starting from the **home triad** — the three values of Q at the three fundamental vectors:\n\nQ(1, 0) = a\nQ(0, 1) = c\nQ(1, 1) = a + b + c\n\nThese three cells form a central triangle in the topograph. Each cell contains one value, and the three cells are arranged symmetrically.\n\nThe home triad completely determines the form Q — given a, c, and a+b+c, you can recover b = (a+b+c) − a − c. So entering these three values is equivalent to entering the coefficients a, b, c directly.",
+      "form": {
+        "a": 1,
+        "b": 2,
+        "c": 3
+      },
+      "state": {
+        "depth": 2,
+        "show_signs": false,
+        "highlight_home": true,
+        "mode": "default"
+      },
+      "activity": "The form shown is Q(x,y) = x² + 2xy + 3y². Verify the home triad:\n- Q(1,0) = 1 (= a)\n- Q(0,1) = 3 (= c)\n- Q(1,1) = 1 + 2 + 3 = 6 (= a+b+c)\n\nCheck these values are highlighted in the topograph.",
+      "quiz": {
+        "question": "For Q(x,y) = 2x² − 3xy + 5y², what is the value Q(1,1) in the home triad?",
+        "options": [
+          "4",
+          "7",
+          "2",
+          "10"
+        ],
+        "correct": 0,
+        "explanation": "Q(1,1) = a + b + c = 2 + (−3) + 5 = 4."
+      }
+    },
+    {
+      "title": "Lax Vectors: The Faces of the Topograph",
+      "text": "In the topograph, each **face** (region) corresponds to a **lax vector** — a primitive integer vector (p, q) identified with its negative (p, q) ~ (−p, −q).\n\n'Primitive' means gcd(|p|, |q|) = 1 — no common factor.\n\nThe value written inside a face is Q(p, q) = Q(−p, −q). Since Q(−p, −q) = Q(p, q) for any quadratic form, the identification is consistent.\n\nFaces are connected by edges. Each edge corresponds to a **basis** — a pair of vectors {e₁, e₂} with det(e₁, e₂) = ±1.",
+      "form": {
+        "a": 1,
+        "b": 0,
+        "c": 1
+      },
+      "state": {
+        "depth": 3,
+        "show_signs": false,
+        "show_vectors": true,
+        "highlight_home": false,
+        "mode": "default"
+      },
+      "activity": "Enable 'Show vectors' mode (in the sidebar). Click on any face — the sidebar shows which vector (p, q) that face represents, and verifies Q(p, q) equals the displayed value.\n\nNotice that the face for (2,1) shows value Q(2,1) = 4+1 = 5.",
+      "quiz": {
+        "question": "A face in the topograph is labeled with value 5. For Q(x,y) = x² + y², which vector could this face represent?",
+        "options": [
+          "(2, 0)",
+          "(2, 1)",
+          "(3, 0)",
+          "(1, 2)"
+        ],
+        "correct": 1,
+        "explanation": "Q(2,1) = 4+1 = 5 and Q(1,2) = 1+4 = 5. Both are valid — the topograph contains both faces. Option (2,1) is listed first."
+      }
+    },
+    {
+      "title": "The Topograph Grows Outward",
+      "text": "From the home triad, the topograph grows outward cell by cell using the **arithmetic progression rule** (covered in the next tutorial).\n\nKey structural facts:\n\n- The topograph is an **infinite planar tree** (3-regular: each face has exactly 3 neighbours)\n- Every primitive vector (p, q) appears exactly once as a face\n- Two faces are adjacent if their vectors {e₁, e₂} form a basis (det = ±1)\n- The topograph contains ALL the information about Q — it is essentially a visual encoding of the form\n\nThe depth slider controls how many levels out from the home triad are shown.",
+      "form": {
+        "a": 1,
+        "b": 0,
+        "c": 2
+      },
+      "state": {
+        "depth": 4,
+        "show_signs": false,
+        "highlight_home": true,
+        "mode": "default"
+      },
+      "activity": "Use the depth slider to expand the topograph to depth 4 or 5. Notice how the tree fans outward and the values grow larger as you move away from the centre.\n\nFor Q = x² + 2y², the smallest values (1 and 2) are near the home triad. As you move outward, values grow — this is the 'climbing' property of positive-definite forms.",
+      "quiz": {
+        "question": "In the topograph, what does 'depth' measure?",
+        "options": [
+          "The largest value displayed",
+          "How many steps from the home triad a face is",
+          "The number of faces with value < 10",
+          "The discriminant of the form"
+        ],
+        "correct": 1,
+        "explanation": "Depth measures how many edges you must cross from the home triad to reach a given face. The home triad has depth 0; their immediate neighbours have depth 1, and so on."
+      }
+    }
+  ]
+}

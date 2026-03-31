@@ -1,0 +1,114 @@
+{
+  "title": "Sign Map and the River",
+  "book": "Conway — The Sensual Quadratic Form",
+  "views": [
+    {
+      "title": "Positive, Negative, Zero",
+      "text": "Enable the **sign map overlay**: faces where Q > 0 are coloured green, Q < 0 red, and Q = 0 white.\n\nFor a **positive-definite** form (discriminant b²−4ac < 0 with a > 0), ALL faces are green. The form takes only positive values (except at (0,0), which is not a face).\n\nFor a **negative-definite** form (discriminant < 0 with a < 0), ALL faces are red.\n\nFor an **indefinite** form (discriminant > 0), there are BOTH green and red regions, separated by a chain of white (zero) faces — the **river**.",
+      "form": {
+        "a": 1,
+        "b": 0,
+        "c": 1
+      },
+      "state": {
+        "depth": 4,
+        "show_signs": true,
+        "highlight_home": false,
+        "mode": "default"
+      },
+      "activity": "Toggle the sign map on and off for Q = x² + y². All faces should be green (or white at the boundary, but x²+y²=0 has no solution in primitive vectors). This confirms Q = x²+y² is positive-definite.\n\nNow try Q = x² − y² (a=1, b=0, c=−1). You should see a 'river' appear separating green and red regions.",
+      "quiz": {
+        "question": "For Q(x,y) = x² − y², what colour would the face for vector (1,0) be in the sign map?",
+        "options": [
+          "Red (Q<0)",
+          "Green (Q>0)",
+          "White (Q=0)",
+          "Blue (Q=1)"
+        ],
+        "correct": 1,
+        "explanation": "Q(1,0) = 1² − 0² = 1 > 0, so this face is green."
+      }
+    },
+    {
+      "title": "The River for Indefinite Forms",
+      "text": "For indefinite forms (b²−4ac > 0), the topograph has a **river**: an infinite path of edges that separates the positive region from the negative region.\n\nAn edge is a **river edge** if the two faces on either side of it have opposite signs (or if one of them is zero).\n\nThe river is a **bi-infinite path** — it has no beginning or end. It meanders through the topograph, sometimes turning left, sometimes right.\n\nKey properties of the river:\n- The river is **periodic** (eventually repeating) — this corresponds to the continued fraction expansion of √D\n- Values along the river are the smallest values taken by |Q|\n- Solutions to Pell's equation x² − Dy² = 1 correspond to **symmetries** of the river",
+      "form": {
+        "a": 1,
+        "b": 0,
+        "c": -2
+      },
+      "state": {
+        "depth": 4,
+        "show_signs": true,
+        "highlight_home": false,
+        "mode": "river"
+      },
+      "activity": "For Q = x² − 2y² (a=1, b=0, c=−2), the discriminant is b²−4ac = 0−4(1)(−2) = 8 > 0. So this is indefinite.\n\nEnable the river overlay. You should see the river highlighted as a path of edges. The values along the river alternate: …, 1, −2, 1, −2, … — these correspond to Q(1,0)=1 and Q(0,1)=−2 and their Pell-equation cousins.",
+      "quiz": {
+        "question": "What is the discriminant of Q(x,y) = x² + 3xy − y²?",
+        "options": [
+          "5",
+          "13",
+          "−5",
+          "9"
+        ],
+        "correct": 1,
+        "explanation": "Discriminant = b²−4ac = 3²−4(1)(−1) = 9+4 = 13."
+      }
+    },
+    {
+      "title": "The River and Continued Fractions",
+      "text": "The river of Q = x² − Dy² is deeply connected to the continued fraction expansion of √D.\n\nThe values along one bank of the river form the sequence of partial quotients of √D. For Q = x² − 2y², the river passes through values 1, −2, 1, −2, … and √2 = [1; 2, 2, 2, …].\n\nMore precisely: the **width** of each 'meander' of the river (i.e., how many steps it takes to cross back) equals the partial quotient in the continued fraction.\n\nThis is why Pell's equation x² − Dy² = 1 is solved by the convergents of √D: the fundamental solution corresponds to the **period** of the continued fraction, which equals the period of the river.",
+      "form": {
+        "a": 1,
+        "b": 0,
+        "c": -5
+      },
+      "state": {
+        "depth": 5,
+        "show_signs": true,
+        "highlight_home": false,
+        "mode": "river"
+      },
+      "activity": "For Q = x² − 5y² (discriminant = 20), enable the river trace. The continued fraction of √5 = [2; 4, 4, 4, …] has period 1. The fundamental solution to x²−5y²=1 is (9, 4) since 81−80=1.\n\nTrace the river and count the period. Do you see a repeating pattern?",
+      "quiz": {
+        "question": "For Q = x² − 2y², the river has values …, 1, −2, 1, −2, … The period is 2. This means the continued fraction of √2 has period:",
+        "options": [
+          "1",
+          "2",
+          "4",
+          "∞"
+        ],
+        "correct": 0,
+        "explanation": "√2 = [1; 2, 2, 2, …] — the repeating part is just '2', so the period is 1. The river period equals the CF period."
+      }
+    },
+    {
+      "title": "No River for Definite Forms",
+      "text": "For **definite forms**, the discriminant b²−4ac < 0, and there is **no river**.\n\nAll values have the same sign throughout the entire (infinite) topograph. The form is either always positive (positive-definite) or always negative (negative-definite) on all nonzero vectors.\n\nWhy? If Q(p,q) > 0 for all primitive (p,q), there's no edge where the value changes sign, so no river edge can exist.\n\nThe absence of a river has a geometric interpretation in the Poincaré disc: the 'ideal geodesic' that would be the river lies **outside** the disc (beyond the unit circle, in the space of real vectors) — it corresponds to vectors with irrational coordinates.",
+      "form": {
+        "a": 2,
+        "b": 1,
+        "c": 3
+      },
+      "state": {
+        "depth": 4,
+        "show_signs": true,
+        "highlight_home": false,
+        "mode": "default"
+      },
+      "activity": "For Q = 2x² + xy + 3y², the discriminant is 1−24 = −23 < 0. Toggle the sign map. All faces should be uniformly green — confirming this is positive-definite with no river.\n\nNow try b = 4: Q = 2x² + 4xy + 3y². Discriminant = 16−24 = −8 < 0. Still definite. Try b = 5: discriminant = 25−24 = 1 > 0 — now indefinite!",
+      "quiz": {
+        "question": "For which value of b does Q = 2x² + bxy + 3y² transition from definite to indefinite?",
+        "options": [
+          "b = 4",
+          "b = 5",
+          "b = 6",
+          "b = 3"
+        ],
+        "correct": 1,
+        "explanation": "Definite requires b²−4ac < 0, i.e., b²<24. For b=4: 16<24 ✓ (definite). For b=5: 25>24 (indefinite). So the transition happens between b=4 and b=5."
+      }
+    }
+  ]
+}

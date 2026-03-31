@@ -1,0 +1,114 @@
+{
+  "title": "The Discriminant",
+  "book": "Conway — The Sensual Quadratic Form",
+  "views": [
+    {
+      "title": "What the Discriminant Measures",
+      "text": "The **discriminant** of Q(x,y) = ax² + bxy + cy² is\n\nD = b² − 4ac\n\nThis single number determines the qualitative shape of the topograph:\n\n- **D < 0**: form is definite — all values same sign, no river\n- **D = 0**: form is degenerate — factors as a perfect square, values include 0 in every row/column\n- **D > 0**: form is indefinite — river separates positive from negative\n\nThe discriminant is a **class invariant**: equivalent forms have the same discriminant. This means D is preserved under unimodular change of variables.",
+      "form": {
+        "a": 1,
+        "b": 0,
+        "c": 1
+      },
+      "state": {
+        "depth": 3,
+        "show_signs": true,
+        "highlight_home": false,
+        "mode": "default"
+      },
+      "activity": "Use the discriminant slider in the sidebar. Set a=1, c=3, and slide b from −3 to +3. Watch the discriminant change. At b=±3, the discriminant crosses zero. For |b|<3, the form is positive-definite (all green). For |b|>3, indefinite (river appears).",
+      "quiz": {
+        "question": "What is the discriminant of Q(x,y) = 3x² + 5xy + 2y²?",
+        "options": [
+          "1",
+          "25",
+          "−24",
+          "13"
+        ],
+        "correct": 0,
+        "explanation": "D = b²−4ac = 25−4(3)(2) = 25−24 = 1."
+      }
+    },
+    {
+      "title": "Discriminant Slider: Watching the Phase Transition",
+      "text": "Fix a = 1, c = 1. As you slide b from 0 to 3:\n\n- At b = 0: D = 0−4 = −4 (positive-definite, all green)\n- At b = 1: D = 1−4 = −3 (positive-definite)\n- At b = 2: D = 4−4 = 0 (degenerate — the form 1·x²+2xy+1·y² = (x+y)² factors!)\n- At b = 3: D = 9−4 = 5 (indefinite, river appears)\n\nThe **critical boundary** D = 0 is when the form degenerates into a perfect square. The 'river' in the degenerate case is a single straight line rather than a meandering path.\n\nThis slider visualisation makes the discriminant **tangible** — you see the topograph reshape in real time.",
+      "form": {
+        "a": 1,
+        "b": 1,
+        "c": 1
+      },
+      "state": {
+        "depth": 4,
+        "show_signs": true,
+        "highlight_home": false,
+        "mode": "disc_slider"
+      },
+      "activity": "Set a=1, c=1 and use the b-slider. Watch the topograph:\n1. b=0: uniform green, large minimum value 1\n2. b=1: still definite, but asymmetric near (1,1) edge\n3. b=2: at D=0, the value (x+y)²=0 at (1,−1). One face goes to 0.\n4. b=3: river appears, red faces emerge.\n\nCan you see the moment the first red face appears?",
+      "quiz": {
+        "question": "For Q = x² + bxy + y², at what value of b does the form become degenerate (D=0)?",
+        "options": [
+          "b = 1",
+          "b = 2",
+          "b = 3",
+          "b = 4"
+        ],
+        "correct": 1,
+        "explanation": "D = b²−4(1)(1) = b²−4. Setting D=0: b²=4, so b=±2."
+      }
+    },
+    {
+      "title": "Same Discriminant, Different Forms",
+      "text": "Two forms can have the same discriminant without being equivalent.\n\nFor example, with D = −20:\n- Q₁ = x² + 5y²  has a=1, b=0, c=5, D = 0−20 = −20 ✓\n- Q₂ = 2x² + 2xy + 3y²  has a=2, b=2, c=3, D = 4−24 = −20 ✓\n\nBoth have discriminant −20, but Q₁ represents 1 (taking x=1,y=0) while Q₂'s minimum value is 2. They are **not** equivalent.\n\nThe number of equivalence classes with discriminant D is called the **class number h(D)**. For D = −20, there are two classes (exactly Q₁ and Q₂ above, in reduced form).",
+      "form": {
+        "a": 1,
+        "b": 0,
+        "c": 5
+      },
+      "state": {
+        "depth": 3,
+        "show_signs": true,
+        "highlight_home": true,
+        "mode": "default"
+      },
+      "activity": "Enter Q₁ = x²+5y² (a=1,b=0,c=5) and observe its topograph. Then enter Q₂ = 2x²+2xy+3y² (a=2,b=2,c=3). Both have D=−20 but look different — the minimum value is 1 vs 2.\n\nSwitch to Equivalence Explorer with both forms. They should show as NOT equivalent.",
+      "quiz": {
+        "question": "Two forms have the same discriminant D. Are they necessarily equivalent?",
+        "options": [
+          "Yes, discriminant completely determines equivalence",
+          "No, there can be multiple equivalence classes with the same discriminant",
+          "Yes, if they are both definite",
+          "No, they can't be equivalent at all"
+        ],
+        "correct": 1,
+        "explanation": "The discriminant is a necessary but not sufficient condition for equivalence. Multiple non-equivalent forms (different classes) can share the same discriminant. The class number h(D) counts how many."
+      }
+    },
+    {
+      "title": "The Discriminant and Quadratic Fields",
+      "text": "The discriminant connects binary quadratic forms to **quadratic number fields** ℚ(√D).\n\nA form Q with discriminant D = b²−4ac factors over ℚ(√D):\nQ(x,y) = a·(x − α·y)·(x − β·y)\nwhere α, β = (−b ± √D)/(2a) are the roots.\n\nFor D < 0, the roots α, β are complex conjugates — the form has no real zeros, consistent with it being definite.\n\nFor D > 0, the roots are real and distinct — the form has real zeros (the 'river' in real directions), and the topograph's river corresponds to the geodesic connecting α and β in the upper half-plane model.\n\nThis is the deep reason the topograph is drawn in the Poincaré disc: the disc models the set of all possible 'directions at infinity', and the form corresponds to a geodesic in that disc.",
+      "form": {
+        "a": 1,
+        "b": 1,
+        "c": -1
+      },
+      "state": {
+        "depth": 4,
+        "show_signs": true,
+        "highlight_home": false,
+        "mode": "poincare"
+      },
+      "activity": "Switch to Poincaré disc view. For Q = x² + xy − y² (D=5>0), you should see the topograph laid out in the disc. The river corresponds to a geodesic arc inside the disc.\n\nFor a definite form (e.g. a=1,b=0,c=1, D=−4), the Poincaré disc shows all faces on the same side of a 'virtual' geodesic outside the disc.",
+      "quiz": {
+        "question": "For Q(x,y) = x² + xy − y², the discriminant D = 1+4 = 5 > 0. This form is:",
+        "options": [
+          "Positive-definite (all values positive)",
+          "Negative-definite (all values negative)",
+          "Indefinite (values of both signs)",
+          "Degenerate (factors as a square)"
+        ],
+        "correct": 2,
+        "explanation": "D = b²−4ac = 1−4(1)(−1) = 1+4 = 5 > 0. Since D > 0, the form is indefinite — it takes both positive and negative values."
+      }
+    }
+  ]
+}

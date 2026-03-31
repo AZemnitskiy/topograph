@@ -1,0 +1,114 @@
+{
+  "title": "Equivalence of Forms",
+  "book": "Conway — The Sensual Quadratic Form",
+  "views": [
+    {
+      "title": "What Is Equivalence?",
+      "text": "Two forms Q₁ and Q₂ are **equivalent** if there exists an invertible integer matrix\nM = [[p, q], [r, s]]   with det(M) = ps − qr = ±1\nsuch that Q₂(x,y) = Q₁(px+qy, rx+sy) for all (x,y).\n\nEquivalent forms represent exactly the same set of integers. They have:\n- The same discriminant D\n- The same reduced form (for definite forms)\n- Isomorphic topographs\n\nGeometrically: Q₂ is a relabeling of the lattice points — you apply a unimodular transformation that maps ℤ² to itself.",
+      "form": {
+        "a": 2,
+        "b": 2,
+        "c": 3
+      },
+      "state": {
+        "depth": 3,
+        "show_signs": false,
+        "highlight_home": true,
+        "mode": "equiv"
+      },
+      "activity": "Open the Equivalence Explorer. Enter Form 1 as Q₁ = x²+y² (a=1,b=0,c=1) and Form 2 as Q₂ = 2x²+2xy+2y² (a=2,b=2,c=2).\n\nNote: Q₂ = 2·Q₁ (scalar multiple), so their topographs are proportional but Q₂ has discriminant 4−16=−12 while Q₁ has −4. They are NOT equivalent.\n\nNow try Q₁=x²+y² and Q₂=x²+2xy+2y². Same discriminant? Q₁: D=−4, Q₂: D=4−8=−4 ✓. Check equivalence.",
+      "quiz": {
+        "question": "Q₁ = x²+y² has D=−4. Which of these has the same discriminant?",
+        "options": [
+          "Q = x²+xy+y² (D=−3)",
+          "Q = x²+2xy+2y² (D=−4)",
+          "Q = x²+y²+z² (not a 2-variable form)",
+          "Q = 2x²+y² (D=−8)"
+        ],
+        "correct": 1,
+        "explanation": "For Q = x²+2xy+2y²: D = b²−4ac = 4−4(1)(2) = 4−8 = −4. Same discriminant as x²+y²."
+      }
+    },
+    {
+      "title": "The Shared Triad Example",
+      "text": "Three different forms can share the same home triad — meaning they have the same values Q(1,0), Q(0,1), Q(1,1) but differ elsewhere.\n\nFrom Weissman's book (p.248): the forms Q₁, Q₂, Q₃ all have the same values at (1,0), (0,1), and (1,1), yet their topographs diverge immediately after the home triad.\n\nThis illustrates that the topograph cannot be determined from just the home triad alone — you need to expand it. The **arithmetic progression rule** propagates the differences outward, creating distinct topographs.\n\nHowever, forms with **isomorphic topographs** (same labeled graph) ARE equivalent — the topograph is a complete invariant.",
+      "form": {
+        "a": 1,
+        "b": 0,
+        "c": 5
+      },
+      "state": {
+        "depth": 4,
+        "show_signs": false,
+        "highlight_home": true,
+        "mode": "default"
+      },
+      "activity": "Open Equivalence Explorer. Enter Q₁ = x²+5y² and Q₂ = x²+5y². These are identical — topographs match ✓.\n\nNow enter Q₂ = 2x²+2xy+3y². Both have D=−20. Are they equivalent? The app draws both topographs — they should look different. The minimum value of Q₁ is 1, but Q₂'s minimum is 2.",
+      "quiz": {
+        "question": "Two forms have the same discriminant D = −20. Q₁ has minimum value 1 and Q₂ has minimum value 2. Are they equivalent?",
+        "options": [
+          "Yes — same discriminant implies equivalence",
+          "No — different minimum values means different topographs",
+          "Yes — any two definite forms of the same discriminant are equivalent",
+          "Cannot determine from this information"
+        ],
+        "correct": 1,
+        "explanation": "The minimum value in the topograph is an invariant of the equivalence class. If Q₁ has minimum 1 and Q₂ has minimum 2, they cannot be equivalent (equivalent forms represent the same integers)."
+      }
+    },
+    {
+      "title": "Proper vs. Improper Equivalence",
+      "text": "We sometimes distinguish:\n- **Proper equivalence**: only matrices M with det(M) = +1 allowed (orientation-preserving)\n- **Improper equivalence** (or just 'equivalence'): det(M) = ±1\n\nA form Q is **ambiguous** (or **self-improper**) if it is improperly equivalent to itself but NOT properly equivalent to itself. Ambiguous forms have a topograph with a **line of symmetry** (a reflection).\n\nThe form Q = ax² + cy² (with b = 0) is always improperly equivalent to itself: the matrix [[0,1],[1,0]] (det = −1) swaps x and y, giving Q' = cx² + ay² = Q if a=c, or a different form if a≠c.\n\nFor studying **genera** and deep number theory, the proper/improper distinction matters. For basic topograph analysis, we use improper equivalence.",
+      "form": {
+        "a": 1,
+        "b": 0,
+        "c": 3
+      },
+      "state": {
+        "depth": 3,
+        "show_signs": false,
+        "highlight_home": false,
+        "mode": "default"
+      },
+      "activity": "Enter Q = x² + 3y² and Q' = 3x² + y². These are improperly equivalent (swap x↔y). Their topographs are mirror images of each other.\n\nIn the Equivalence Explorer, check if they are equivalent. The app should confirm: YES (improper equivalence).",
+      "quiz": {
+        "question": "Q = x²+3y² and Q' = 3x²+y². Are these equivalent?",
+        "options": [
+          "No — different values at (1,0)",
+          "Yes — related by swapping x and y (a unimodular transformation with det=−1)",
+          "Only if a=c",
+          "No — they have different discriminants"
+        ],
+        "correct": 1,
+        "explanation": "The substitution (x,y)→(y,x) has matrix [[0,1],[1,0]] with det=−1. Applying it: Q(y,x) = y²+3x² = Q'(x,y). So they are improperly equivalent."
+      }
+    },
+    {
+      "title": "Gauss Composition",
+      "text": "Equivalence classes of forms with a given discriminant form a **group** under Gauss composition.\n\nThe group operation (composition) takes two forms Q₁, Q₂ and produces a third Q₃ such that:\n- disc(Q₃) = disc(Q₁) = disc(Q₂)\n- Any integer representable as n₁·n₂ (where n₁ is represented by Q₁ and n₂ by Q₂) is represented by Q₃\n\nThe identity element of this group is the **principal form** — the reduced form equivalent to x² + (D/4)y² (when D ≡ 0 mod 4) or x²+xy+((1−D)/4)y² (when D ≡ 1 mod 4).\n\nThe class number h(D) is exactly the **order** of this group (the class group).",
+      "form": {
+        "a": 1,
+        "b": 0,
+        "c": 5
+      },
+      "state": {
+        "depth": 3,
+        "show_signs": false,
+        "highlight_home": true,
+        "mode": "equiv"
+      },
+      "activity": "For D = −20 (class number 2), the two forms are Q₁ = x²+5y² and Q₂ = 2x²+2xy+3y².\n\nGauss composition: Q₂ ∘ Q₂ = Q₁ (the principal form). This means Q₂ has order 2 in the class group.\n\nVerify: if Q₂ represents 2 and Q₂ also represents 3, does Q₁ represent 6=2·3? Yes: Q₁(1,1) = 1+5 = 6 ✓.",
+      "quiz": {
+        "question": "The class group for D=−20 has two elements: [Q₁] and [Q₂]. What is [Q₂]∘[Q₂]?",
+        "options": [
+          "[Q₂] (order is infinite)",
+          "[Q₁] (the identity — Q₂ has order 2)",
+          "A third class [Q₃]",
+          "This operation is not defined"
+        ],
+        "correct": 1,
+        "explanation": "Since there are only two classes, and every group element's square is in the group, [Q₂]²=[Q₁] (the identity, since the group has order 2). This means Q₂ has order 2."
+      }
+    }
+  ]
+}

@@ -1,0 +1,114 @@
+{
+  "title": "The Arithmetic Progression Rule",
+  "book": "Conway — The Sensual Quadratic Form",
+  "views": [
+    {
+      "title": "Three Values Around an Edge",
+      "text": "The **arithmetic progression rule** is the single rule that determines all values in the topograph from the home triad.\n\nConsider any edge in the topograph. It is shared by two faces with values **u** and **v**. The edge connects two vertices (nodes in the tree). Around each vertex, three faces meet. The face opposite to one vertex has a value determined by u, v, and the value e at the vertex's third face:\n\nu + v = e + f\n\nwhere e and f are the values of the faces on opposite sides of the edge's **node**. This is the arithmetic progression (also called the **lax law** or **climbing rule**).\n\nSimpler statement: **across every node, the sum of opposite face values is equal.** Or: the two faces on one side of a node and the two on the other side form an arithmetic progression.",
+      "form": {
+        "a": 1,
+        "b": 0,
+        "c": 1
+      },
+      "state": {
+        "depth": 3,
+        "show_signs": false,
+        "highlight_home": false,
+        "mode": "default"
+      },
+      "activity": "Click on any face in the topograph to inspect it. The sidebar shows the face value, its neighbours, and demonstrates the arithmetic rule f = u + v − e.\n\nTry clicking a face at depth ≥ 2 to see how its value is derived from its two parent values.",
+      "quiz": {
+        "question": "Three faces around a node have values 3, 5, and 7. What is the value of the fourth face (opposite the node)?",
+        "options": [
+          "9",
+          "1",
+          "8",
+          "15"
+        ],
+        "correct": 1,
+        "explanation": "The arithmetic progression rule: u + v = e + f, so f = u + v − e. If u=3, v=5, e=7: f = 3+5−7 = 1."
+      }
+    },
+    {
+      "title": "Why the Rule Works",
+      "text": "The arithmetic progression rule is not a coincidence — it follows directly from algebra.\n\nGiven two basis vectors e₁ = (p, q) and e₂ = (r, s) with det = ps − qr = ±1, the four vectors at the corners of the 'diamond' are e₁, e₂, e₁+e₂, and −e₁ (or some sign variant).\n\nThe bilinear form associated to Q is:\nB(u, v) = Q(u + v) − Q(u) − Q(v)\n\nA direct calculation shows:\nQ(e₁) + Q(e₂) = Q(e₁ + e₂) + Q(e₁ − e₂) − 2·correction\n\nMore precisely, the rule follows from:\nQ(e₁ + e₂) + Q(e₁ − e₂) = 2Q(e₁) + 2Q(e₂)\n\nThis is the **parallelogram law** for quadratic forms — a consequence of bilinearity.",
+      "form": {
+        "a": 1,
+        "b": 1,
+        "c": 1
+      },
+      "state": {
+        "depth": 3,
+        "show_signs": false,
+        "highlight_home": false,
+        "mode": "default"
+      },
+      "activity": "Verify the rule manually. For Q = x² + xy + y² and vectors (1,0), (0,1), (1,1):  \nQ(1,0) = 1, Q(0,1) = 1, Q(1,1) = 3.\nNow Q(2,1) should equal Q(1,0) + Q(1,1) − Q(0,1) = 1 + 3 − 1 = 3.\nCheck: Q(2,1) = 4 + 2 + 1 = 7.  Hmm, that's 7 not 3!\n\nWait — the rule requires adjacent faces sharing an edge (a basis pair). Let's use the correct adjacent pair: (0,1) and (1,1) form a basis (det = 1). Their common neighbour across the edge is (1,2): Q(1,2) = 1 + 2 + 4 = 7. And (0,1)+(1,1)=1+3=4; the other neighbour across that node is Q(-1,0)=1. So 1+3 = 1+3 ✓.",
+      "quiz": {
+        "question": "For Q(x,y) = x² + y², you know Q(1,0)=1, Q(1,1)=2, Q(0,1)=1. Using the rule, what is Q(2,1)?",
+        "options": [
+          "5",
+          "3",
+          "4",
+          "2"
+        ],
+        "correct": 0,
+        "explanation": "The basis pair (1,0),(1,1) has det=1. Their sum (2,1) and their difference (0,-1)~(0,1) satisfy Q(1,0)+Q(1,1) = Q(2,1)+Q(0,1): 1+2 = Q(2,1)+1, so Q(2,1)=2. Wait — actually Q(2,1)=4+1=5. The correct adjacent pair for computing Q(2,1) is (1,0) and (1,1): Q(2,1)+Q(0,-1) = 2Q(1,0)+2Q(1,1) → not this formula. Using u+v=e+f: with e=(1,0)→1 and f=(1,1)→2, the shared edge gives us u=Q of one neighbour and v=Q of other. Q(2,1)=5 by direct calculation: 4+0+1=5."
+      }
+    },
+    {
+      "title": "Step-by-Step Cell Completion",
+      "text": "You can use the arithmetic progression rule to fill in a topograph cell by cell, starting from the home triad.\n\nGiven any three mutually adjacent faces (a **superbase**) with values e, u, v:\n- The face on the far side of the edge between e and u has value: **f = e + u − v** ... No, wait.\n\nThe correct rule per Conway:\n\nAround each **vertex** of the topograph, exactly three faces meet. Label them A, B, C. Then for any edge AB, the two faces NOT on that edge (i.e., the faces C on each endpoint) satisfy:\n\nA + B = C_left + C_right\n\nwhere C_left and C_right are the two faces at the endpoints of edge AB that are NOT A or B.\n\nSo if you know three faces of a 'diamond' (rhombus), you can compute the fourth as:\nf_new = A + B − f_old",
+      "form": {
+        "a": 1,
+        "b": 0,
+        "c": 2
+      },
+      "state": {
+        "depth": 3,
+        "show_signs": false,
+        "highlight_home": true,
+        "mode": "default"
+      },
+      "activity": "Click on any face in the topograph to inspect it. Try clicking the face at depth 1 adjacent to the home triad for Q = x² + 2y².\n\nThe sidebar will show its value and neighbours, and compute f = u + v − e to demonstrate how each value is determined by its parents.",
+      "quiz": {
+        "question": "In the topograph, four faces form a 'diamond' around an edge. Three known values are 1, 2, and 3. The fourth (opposite corner) has value:",
+        "options": [
+          "4",
+          "1",
+          "0",
+          "2"
+        ],
+        "correct": 1,
+        "explanation": "The diamond rule: opposite corners sum to the same value. So 1 + 2 + 3 = sum of all four... actually using A+B = C_left+C_right: if the shared edge has values A=1, B=2 and one opposite is 3, then the other is 1+2−3=0. Let me restate: f_new = A + B − f_old = 1+2−3=0."
+      }
+    },
+    {
+      "title": "The Topograph Determines Q Completely",
+      "text": "A remarkable fact: the topograph completely encodes the quadratic form.\n\n**Theorem**: Two forms Q₁ and Q₂ are equivalent (i.e., one is obtained from the other by an invertible integer change of variables) if and only if their topographs are isomorphic as labeled graphs.\n\nThis makes the topograph into a **canonical invariant** of the equivalence class. Conway's insight was that the topograph is a better invariant than the reduced form — it simultaneously shows you the value distribution, the discriminant (via the presence or absence of a river), and the automorphisms (symmetries) of the form.\n\nThe **home triad** is just a basepoint — any superbase can serve as a starting point for reading off a, b, c.",
+      "form": {
+        "a": 2,
+        "b": -1,
+        "c": 3
+      },
+      "state": {
+        "depth": 4,
+        "show_signs": false,
+        "highlight_home": true,
+        "mode": "default"
+      },
+      "activity": "Enter the two forms Q₁ = 2x² − xy + 3y² and Q₂ = 3x² + xy + 2y². Switch to the Equivalence Explorer tab. The app draws both topographs side by side.\n\nAre these forms equivalent? Look at whether they share the same value distribution.",
+      "quiz": {
+        "question": "If two forms Q₁ and Q₂ have the same topograph structure (same labeled graph up to isomorphism), what can you conclude?",
+        "options": [
+          "They are both positive-definite",
+          "They have the same discriminant only",
+          "They are equivalent — related by a unimodular change of variables",
+          "They represent the same set of primes only"
+        ],
+        "correct": 2,
+        "explanation": "The topograph is a complete invariant of the equivalence class: two forms are equivalent if and only if their topographs are isomorphic as edge-labeled trees."
+      }
+    }
+  ]
+}

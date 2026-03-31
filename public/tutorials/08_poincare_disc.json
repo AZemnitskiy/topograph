@@ -1,0 +1,87 @@
+{
+  "title": "The Poincaré Disc View",
+  "book": "Conway — The Sensual Quadratic Form",
+  "views": [
+    {
+      "title": "Why the Poincaré Disc?",
+      "text": "The topograph is an infinite object — it grows forever outward. The **Poincaré disc** compactly represents this infinity inside a unit circle.\n\nIn the disc model of hyperbolic geometry:\n- The interior of the disc represents 'hyperbolic space'\n- Points on the boundary circle represent 'points at infinity'\n- Each primitive vector (p,q) maps to a point on the boundary via its slope p/q\n\nThe faces of the topograph map to **ideal triangles** — triangles with all three vertices on the boundary. The tree of faces becomes a **Farey tessellation** of the disc.\n\nThe whole topograph fits inside the unit disc, with the home triad near the centre and finer and finer triangles accumulating near the boundary.",
+      "form": {
+        "a": 1,
+        "b": 0,
+        "c": 1
+      },
+      "state": {
+        "depth": 5,
+        "show_signs": true,
+        "highlight_home": true,
+        "mode": "poincare"
+      },
+      "activity": "Switch to Poincaré disc view. The entire topograph of Q = x²+y² is displayed inside a circle.\n\nThe colouring (green = positive, red = negative) shows the sign map. For x²+y², everything is green. Zoom in to see finer triangles near the boundary.",
+      "quiz": {
+        "question": "In the Poincaré disc view, what do points on the boundary circle represent?",
+        "options": [
+          "Integer lattice points with large coordinates",
+          "Faces of the topograph with very large values",
+          "Directions (slopes) of primitive integer vectors",
+          "Values of Q that approach infinity"
+        ],
+        "correct": 2,
+        "explanation": "The boundary of the Poincaré disc represents 'infinity' — each boundary point corresponds to a direction (slope) p/q of a primitive integer vector (p,q). As gcd(p,q)=1 and |p|+|q|→∞, the vectors approach the boundary."
+      }
+    },
+    {
+      "title": "The Farey Tessellation",
+      "text": "The Poincaré disc is tiled by an infinite collection of ideal triangles — this is the **Farey tessellation** (also called the Stern-Brocot tree or modular tessellation).\n\nEach triangle corresponds to a superbase {e₁, e₂, e₃} of the topograph. The three boundary points of the triangle are the three lax vectors.\n\nAdjacent triangles share an edge (a geodesic arc). The full tessellation tiles the disc, and the **PSL(2,ℤ) symmetry group** (integer Möbius transformations) acts on it.\n\nFor a quadratic form Q, each triangle is **coloured** by the sign of Q on its lax vectors. The colouring pattern encodes all information about Q.",
+      "form": {
+        "a": 1,
+        "b": 0,
+        "c": -1
+      },
+      "state": {
+        "depth": 5,
+        "show_signs": true,
+        "highlight_home": false,
+        "mode": "poincare"
+      },
+      "activity": "For Q = x² − y² (D=4>0, indefinite), switch to Poincaré disc view with sign overlay. The river in the topograph corresponds to a **geodesic** across the disc — a circular arc connecting the two roots of Q(x,1)=0, i.e., x=±1.\n\nThe positive region (green) and negative region (red) are separated by this geodesic.",
+      "quiz": {
+        "question": "In the Poincaré disc, the 'river' of an indefinite form corresponds to:",
+        "options": [
+          "A diameter of the disc",
+          "A geodesic arc — a circular arc connecting two boundary points",
+          "The boundary circle itself",
+          "A spiral path from centre to edge"
+        ],
+        "correct": 1,
+        "explanation": "In hyperbolic geometry, geodesics are circular arcs perpendicular to the boundary. The river corresponds to the geodesic connecting the two real roots of Q(x,1)=0 on the boundary."
+      }
+    },
+    {
+      "title": "Zoom and Pan in the Disc",
+      "text": "The Poincaré disc view is interactive: pan to move the viewpoint and zoom to see finer details near the boundary.\n\nNear the boundary, the triangles become extremely thin. Each region of the boundary corresponds to a specific 'direction' in the integers — the Farey sequence arranges all rational slopes p/q in a beautiful fractal pattern.\n\nAs you zoom toward any boundary point, you see smaller and smaller triangles — this is the **self-similar** (fractal) structure of the Farey tessellation. The whole tessellation is symmetric under the group PSL(2,ℤ) of integer Möbius transformations.\n\nThis infinite, self-similar beauty is why mathematicians find the topograph so compelling — it reveals the hidden geometry of quadratic forms.",
+      "form": {
+        "a": 1,
+        "b": 1,
+        "c": -1
+      },
+      "state": {
+        "depth": 6,
+        "show_signs": true,
+        "highlight_home": false,
+        "mode": "poincare"
+      },
+      "activity": "In the Poincaré disc for Q = x²+xy−y², zoom into the region near the boundary point corresponding to direction (1,1). You should see increasingly fine triangles.\n\nPan around to see how the positive (green) and negative (red) regions extend. The river geodesic cuts across the disc.",
+      "quiz": {
+        "question": "The Farey tessellation in the Poincaré disc has a self-similar structure because:",
+        "options": [
+          "The integers are finite",
+          "The PSL(2,ℤ) symmetry group acts on it, creating infinitely many copies of each region",
+          "The discriminant is always an integer",
+          "All quadratic forms are equivalent"
+        ],
+        "correct": 1,
+        "explanation": "PSL(2,ℤ) is the group of integer 2×2 matrices with determinant 1 (modulo ±I). It acts on the hyperbolic plane by Möbius transformations, mapping triangles to triangles and creating the self-similar pattern."
+      }
+    }
+  ]
+}

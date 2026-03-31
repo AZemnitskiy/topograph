@@ -1,26 +1,95 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+/* Topograph Explorer — global dark theme */
+
+*, *::before, *::after { box-sizing: border-box; }
+
+html, body {
+  margin: 0; padding: 0;
+  background: #0d0d1a;
+  color: #e0e0ff;
+  font-family: 'Outfit', sans-serif;
+  height: 100%;
+  overflow: hidden;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+/* Scrollbars */
+::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar-track { background: #0d0d1a; }
+::-webkit-scrollbar-thumb { background: #2a2a5a; border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: #3a3a7a; }
+
+/* Range inputs */
+input[type="range"] {
+  -webkit-appearance: none;
+  appearance: none;
+  height: 4px;
+  border-radius: 2px;
+  background: #2a2a5a;
+  outline: none;
+}
+input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 14px; height: 14px;
+  border-radius: 50%;
+  background: #26c6da;
+  cursor: pointer;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+/* Markdown inside tutorial panel */
+.tut-view-text h1, .tut-view-text h2, .tut-view-text h3 {
+  color: #26c6da;
+  font-family: 'JetBrains Mono', monospace;
+  margin-top: 1em; margin-bottom: 0.4em;
+}
+.tut-view-text p { margin: 0 0 0.9em 0; line-height: 1.75; }
+.tut-view-text code {
+  background: #1a1a3a; border-radius: 4px;
+  padding: 1px 5px; font-family: 'JetBrains Mono', monospace;
+  font-size: 0.9em; color: #c6ff00;
+}
+.tut-view-text pre {
+  background: #111128; border-radius: 6px; padding: 12px;
+  overflow-x: auto; border: 1px solid #1e1e3a;
+}
+.tut-view-text pre code { background: none; padding: 0; }
+.tut-view-text ul, .tut-view-text ol { padding-left: 1.4em; margin: 0 0 0.9em 0; }
+.tut-view-text li { margin-bottom: 0.3em; }
+.tut-view-text strong { color: #f0f4ff; font-weight: 600; }
+.tut-view-text em { color: #c6ff00; font-style: italic; }
+.tut-view-text table { border-collapse: collapse; width: 100%; margin-bottom: 0.9em; }
+.tut-view-text th, .tut-view-text td {
+  border: 1px solid #2a2a5a; padding: 5px 10px;
+  font-family: 'JetBrains Mono', monospace; font-size: 12px;
+}
+.tut-view-text th { background: #1a1a3a; color: #26c6da; }
+.tut-view-text a { color: #26c6da; }
+
+/* SVG canvas wrapper */
+.topo-svg-wrap {
+  flex: 1; min-height: 0;
+  display: flex; align-items: center; justify-content: center;
+  overflow: hidden;
+}
+.topo-svg-wrap > div {
+  width: 100%; height: 100%; display: flex;
+  align-items: center; justify-content: center;
+}
+.topo-svg-wrap svg {
+  width: 100%; height: 100%;
+  max-width: 100%; max-height: 100%;
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+/* Select */
+select option { background: #0d0d20; }
+
+/* Animation dialog */
+.anim-dialog-overlay {
+  position: fixed; inset: 0; background: rgba(0,0,0,0.7);
+  display: flex; align-items: center; justify-content: center;
+  z-index: 10000;
+}
+.anim-dialog {
+  background: #13132b; border: 1px solid #2a2a5a;
+  border-radius: 12px; padding: 24px; min-width: 300px; max-width: 360px;
 }

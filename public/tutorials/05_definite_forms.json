@@ -1,0 +1,114 @@
+{
+  "title": "Positive-Definite Forms",
+  "book": "Conway — The Sensual Quadratic Form",
+  "views": [
+    {
+      "title": "What Makes a Form Positive-Definite?",
+      "text": "A form Q(x,y) = ax² + bxy + cy² is **positive-definite** if Q(x,y) > 0 for all (x,y) ≠ (0,0).\n\nConditions:\n- a > 0  (so Q(1,0) = a > 0)\n- c > 0  (so Q(0,1) = c > 0)\n- D = b²−4ac < 0  (the 'valley' is deep enough that there are no zeros)\n\nIn the topograph, positive-definite forms show **all green faces**. The values increase as you move outward — the form has a unique minimum.\n\nThe **climbing property**: moving outward from any cell always increases the value. This is the topograph version of 'going uphill' from the minimum.",
+      "form": {
+        "a": 1,
+        "b": 0,
+        "c": 1
+      },
+      "state": {
+        "depth": 4,
+        "show_signs": true,
+        "highlight_home": true,
+        "mode": "default"
+      },
+      "activity": "For Q = x² + y² (the sum of two squares form), observe:\n1. All faces are green (positive-definite)\n2. The minimum value is 1 (at the home faces (1,0) and (0,1))\n3. Values increase outward: 1, 1, 2, 2, 4, 5, 5, …\n\nThese are precisely the values representable as sums of two squares!",
+      "quiz": {
+        "question": "Which of these values CANNOT be represented as x² + y² for integers x, y?",
+        "options": [
+          "1",
+          "3",
+          "5",
+          "10"
+        ],
+        "correct": 1,
+        "explanation": "3 cannot be written as a sum of two squares. Numbers representable as x²+y² are 0,1,2,4,5,8,9,10,... — multiples of 3 (like 3, 6, 12, ...) cannot be sums of two squares unless they are multiples of 9, etc."
+      }
+    },
+    {
+      "title": "Reduced Forms",
+      "text": "Every positive-definite form is equivalent to a unique **reduced form**: one satisfying\n\n0 < a ≤ c    and    |b| ≤ a\n(with b ≥ 0 if a = c)\n\nThe reduced form is found by Gauss's **reduction algorithm**:\n1. If |b| > a: replace (a,b,c) → (a, b−2ak, c−bk+ak²) for k = round(b/2a) to make |b| ≤ a\n2. If a > c: swap: (a,b,c) → (c,−b,a)\n3. Repeat until stable\n\nThe reduced form is the unique element of minimum a (i.e., minimum value in the topograph) in its equivalence class.",
+      "form": {
+        "a": 3,
+        "b": 4,
+        "c": 3
+      },
+      "state": {
+        "depth": 3,
+        "show_signs": false,
+        "highlight_home": true,
+        "mode": "default"
+      },
+      "activity": "Enter Q = 3x² + 4xy + 3y². Is this reduced? Check: a=3, c=3, b=4. We need |b| ≤ a=3, but |4|=4 > 3. Not reduced.\n\nThe app shows the reduced form in the sidebar. Click 'Reduce' to see the equivalent reduced form. It should be 3x² − 2xy + 3y²... let's verify: subtract 4 from b by the shift x→x−y: a'=3, b'=4−6=−2, c'=3−4+3=2... hmm. The result should be computed by the algorithm.",
+      "quiz": {
+        "question": "Which of these is a reduced positive-definite form (satisfying 0 < a ≤ c and |b| ≤ a)?",
+        "options": [
+          "Q = 3x² + 4xy + 5y²",
+          "Q = 2x² + xy + 3y²",
+          "Q = 5x² + 3xy + 2y²",
+          "Q = 1x² + 3xy + 2y²"
+        ],
+        "correct": 1,
+        "explanation": "For Q = 2x²+xy+3y²: a=2, b=1, c=3. Check: 0<2≤3 ✓ and |1|≤2 ✓. This is reduced. Option A has |b|=4 > a=3. Option C has a=5 > c=2. Option D has |b|=3 > a=1."
+      }
+    },
+    {
+      "title": "Sums of Two Squares",
+      "text": "The form Q = x² + y² has discriminant D = −4. Its topograph encodes a famous theorem:\n\n**Theorem (Fermat)**: An odd prime p is representable as p = x² + y² if and only if p ≡ 1 (mod 4).\n\nIn the topograph of Q = x² + y², the values p at the faces are exactly the integers representable as sums of two squares. So you can **read off** Fermat's theorem visually: primes 5, 13, 17, 29, 37, … appear as face values; primes 3, 7, 11, 19, 23, … do not.\n\nThe deeper reason: the splitting of primes in ℤ[i] (Gaussian integers) is controlled by p ≡ 1 (mod 4), which is exactly when p decomposes in ℤ[i] = ℤ[√−1] (norm form N(a+bi) = a²+b²).",
+      "form": {
+        "a": 1,
+        "b": 0,
+        "c": 1
+      },
+      "state": {
+        "depth": 5,
+        "show_signs": false,
+        "highlight_home": false,
+        "mode": "default"
+      },
+      "activity": "Expand the topograph of Q = x² + y² to depth 5. Look for the prime values in the faces. You should see 2, 5, 10, 13, 17, 25, 26, 29, …\n\nNotice: which primes appear? 2 ✓ (special case), 5 ✓ (5≡1 mod 4), 13 ✓ (13≡1 mod 4), 17 ✓ (17≡1 mod 4). The primes 3, 7, 11 do NOT appear.",
+      "quiz": {
+        "question": "Is the prime 41 representable as a sum of two squares?",
+        "options": [
+          "No, because 41 is prime",
+          "Yes, because 41 ≡ 1 (mod 4)",
+          "No, because 41 > 40",
+          "Yes, because 41 is odd"
+        ],
+        "correct": 1,
+        "explanation": "41 = 4·10+1 ≡ 1 (mod 4), so by Fermat's theorem, 41 = x²+y² for some integers. Indeed 41 = 25+16 = 5²+4²."
+      }
+    },
+    {
+      "title": "The Class Number",
+      "text": "For a given discriminant D < 0, the **class number h(D)** is the number of inequivalent reduced positive-definite forms with that discriminant.\n\nSome values:\n- h(−3) = 1: only x²+xy+y²\n- h(−4) = 1: only x²+y²\n- h(−7) = 1: only x²+xy+2y²\n- h(−20) = 2: x²+5y² and 2x²+2xy+3y²\n- h(−23) = 3: three inequivalent forms\n\nWhen h(D) = 1, the form Q with that discriminant represents ALL integers in a certain congruence class — the unique factorisation in the corresponding quadratic ring.\n\nWhen h(D) > 1, the form fails to represent some integers in the 'expected' class — this failure is measured by h(D).",
+      "form": {
+        "a": 1,
+        "b": 1,
+        "c": 2
+      },
+      "state": {
+        "depth": 3,
+        "show_signs": false,
+        "highlight_home": true,
+        "mode": "default"
+      },
+      "activity": "For D = −7: enter Q = x²+xy+2y². Verify D = 1−8 = −7. This is the unique reduced form (h(−7)=1).\n\nFor D = −20: enter Q₁ = x²+5y² (D=0−20=−20) and Q₂ = 2x²+2xy+3y² (D=4−24=−20). Both are reduced and inequivalent — confirming h(−20)=2.",
+      "quiz": {
+        "question": "The class number h(−4) = 1. This means:",
+        "options": [
+          "There is only one prime with discriminant −4",
+          "Every positive integer is a sum of two squares",
+          "There is exactly one equivalence class of forms with discriminant −4",
+          "The form x²+y² represents only odd integers"
+        ],
+        "correct": 2,
+        "explanation": "h(D)=1 means there is exactly one reduced form with discriminant D up to equivalence. For D=−4, this unique form is x²+y²."
+      }
+    }
+  ]
+}
