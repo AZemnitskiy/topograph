@@ -60,7 +60,7 @@ input[type="range"]::-webkit-slider-thumb {
 .tut-view-text pre code { background: none; padding: 0; }
 .tut-view-text ul, .tut-view-text ol { padding-left: 1.4em; margin: 0 0 0.9em 0; }
 .tut-view-text li { margin-bottom: 0.3em; }
-.tut-view-text strong { color: #f0f4ff; font-weight: 600; }
+.tut-view-text strong { color: #f0f4ff; font-weight: 400; }
 .tut-view-text em { color: #c6ff00; font-style: italic; }
 .tut-view-text table { border-collapse: collapse; width: 100%; margin-bottom: 0.9em; }
 .tut-view-text th, .tut-view-text td {

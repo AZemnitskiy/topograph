@@ -164,7 +164,7 @@ export default function TutorialPanel({
       )}
       {/* Tutorial title */}
       <div style={{ marginBottom: 8 }}>
-        <div style={{ fontFamily: 'JetBrains Mono, monospace', fontSize: '1.375rem', fontWeight: 600,
+        <div style={{ fontFamily: 'JetBrains Mono, monospace', fontSize: '1.125rem',
                       color: ACCENT, letterSpacing: 1, marginBottom: 2 }}>
           {tutNum ? `${tutNum}. ` : ''}{tutorialData.title}
         </div>
@@ -200,7 +200,7 @@ export default function TutorialPanel({
 
       {/* View title */}
       {view.title && (
-        <div style={{ fontFamily: 'JetBrains Mono, monospace', fontSize: '1.1875rem', fontWeight: 600,
+        <div style={{ fontFamily: 'JetBrains Mono, monospace', fontSize: '1.1875rem',
                       color: '#ffffff', marginBottom: 10, paddingBottom: 10,
                       borderBottom: '1px solid #2a2a5a' }}>
           {view.title}
@@ -214,7 +214,7 @@ export default function TutorialPanel({
           {view.activity && (
             <div style={boxStyle}>
               <div style={{ fontSize: '0.8125rem',
-                            fontWeight: 700, letterSpacing: 1.5, color: ACCENT,
+                            letterSpacing: 1.5, color: ACCENT,
                             textTransform: 'uppercase', marginBottom: 8 }}>
                 ▸ Activity
               </div>
@@ -226,10 +226,10 @@ export default function TutorialPanel({
               <div style={{ display: 'flex', justifyContent: 'space-between',
                             alignItems: 'center', marginBottom: 8 }}>
                 <span style={{ fontSize: '0.8125rem',
-                               fontWeight: 700, letterSpacing: 1.5, color: '#7986cb',
+                               letterSpacing: 1.5, color: '#7986cb',
                                textTransform: 'uppercase' }}>▸ Quiz</span>
                 {answered && (
-                  <span style={{ fontSize: 16, fontWeight: 700,
+                  <span style={{ fontSize: 16,
                                  color: qAns === qCorr ? GREEN : RED_COL }}>
                     {qAns === qCorr ? '✓' : '✗'}
                   </span>
@@ -243,7 +243,7 @@ export default function TutorialPanel({
                             color: '#c0c8e8', lineHeight: 1.8, marginBottom: 20 }}>
                 {quiz.options.map((opt, i) => (
                   <div key={i} style={{ margin: '3px 0' }}>
-                    <span style={{ color: '#7986cb', fontWeight: 700 }}>{LETTERS[i]})</span> {opt}
+                    <span style={{ color: '#7986cb' }}>{LETTERS[i]})</span> {opt}
                   </div>
                 ))}
               </div>
@@ -266,7 +266,7 @@ export default function TutorialPanel({
                             onClick={() => setQuizAnswer(qi)}
                             style={{ background: bg, color: col, border: `1px solid ${bdr}`,
                                      fontFamily: 'JetBrains Mono, monospace', fontSize: '0.8125rem',
-                                     fontWeight: 700, padding: '6px 14px', minWidth: 40,
+                                     padding: '6px 14px', minWidth: 40,
                                      cursor: answered ? 'default' : 'pointer', borderRadius: 4 }}>
                       {LETTERS[qi]}
                     </button>

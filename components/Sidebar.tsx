@@ -20,8 +20,8 @@ function SliderInt({ label, value, min, max, onChange }: {
     <div style={{ marginBottom: 6 }}>
       {label && (
         <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 2 }}>
-          <span style={{ color: UI_TEXT, fontSize: '0.8125rem', fontWeight: 600 }}>{label}</span>
-          <span style={{ color: ACCENT, fontSize: '0.8125rem', fontWeight: 600 }}>{value}</span>
+          <span style={{ color: UI_TEXT, fontSize: '0.8125rem' }}>{label}</span>
+          <span style={{ color: ACCENT, fontSize: '0.8125rem' }}>{value}</span>
         </div>
       )}
       <input
@@ -54,7 +54,7 @@ function Divider() {
 function SectionLabel({ children, style }: { children: React.ReactNode; style?: React.CSSProperties }) {
   return (
     <div style={{ fontSize: '0.75rem', color: UI_TEXT,
-                  fontWeight: 700, letterSpacing: 2, textTransform: 'uppercase', marginBottom: 8, marginTop: 6, ...style }}>
+                  letterSpacing: 2, textTransform: 'uppercase', marginBottom: 8, marginTop: 6, ...style }}>
       {children}
     </div>
   );
@@ -195,7 +195,7 @@ export default function Sidebar({
       {/* Header */}
       <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 8, marginBottom: 4 }}>
         <div>
-          <div style={{ fontFamily: 'JetBrains Mono, monospace', fontSize: '1.5rem', fontWeight: 600,
+          <div style={{ fontFamily: 'JetBrains Mono, monospace', fontSize: '1.5rem', fontWeight: 700,
                         color: ACCENT, letterSpacing: 2, marginBottom: 2 }}>TOPOGRAPH</div>
           <div style={{ fontSize: '0.875rem', color: UI_TEXT,
                         letterSpacing: 1 }}>Binary Quadratic Form Explorer</div>
@@ -227,7 +227,7 @@ export default function Sidebar({
       {/* Discriminant card */}
       <ResultCard>
         <span style={{ color: TEXT_DIM }}>D = b²−4ac = </span>
-        <span style={{ color: dCol, fontSize: '0.8125rem', fontWeight: 600 }}>{Math.round(disc)}</span>
+        <span style={{ color: dCol, fontSize: '0.8125rem' }}>{Math.round(disc)}</span>
         <span style={{ color: TEXT_DIM }}> ({clsName})</span>
       </ResultCard>
 
@@ -265,7 +265,7 @@ export default function Sidebar({
           <SliderInt label="c₂" value={eqC2} min={-9} max={9} onChange={v => setEqC2(v)} />
           {eqResult && (
             <ResultCard>
-              <span style={{ color: eqResult.ok ? GREEN : RED_COL, fontWeight: 600, fontSize: '0.8125rem' }}>
+              <span style={{ color: eqResult.ok ? GREEN : RED_COL, fontSize: '0.8125rem' }}>
                 {eqResult.ok ? 'EQUIVALENT' : 'NOT equivalent'}
               </span>
               <br />

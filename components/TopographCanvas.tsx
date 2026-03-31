@@ -115,13 +115,13 @@ export default function TopographCanvas() {
       <div style={{ display: 'flex', flexDirection: 'column', width: '100%', height: '100%', minWidth: 0 }}>
         <div style={{ display: 'flex', gap: 16, alignItems: 'flex-start', flex: 1, minHeight: 0, minWidth: 0 }}>
           <div style={{ flex: 1, minWidth: 0 }}>
-            <div style={{ fontFamily: 'JetBrains Mono, monospace', fontSize: '0.9375rem', fontWeight: 600, color: ACCENT, marginBottom: 8, textAlign: 'center' }}>
+            <div style={{ fontFamily: 'JetBrains Mono, monospace', fontSize: '0.9375rem', color: ACCENT, marginBottom: 8, textAlign: 'center' }}>
               Q₁(x, y) = {fmtFormStr(a, b, c)}
             </div>
             <div dangerouslySetInnerHTML={{ __html: svg1 }} onClick={handleSvgClick} style={{ cursor: 'crosshair' }} />
           </div>
           <div style={{ flex: 1, minWidth: 0 }}>
-            <div style={{ fontFamily: 'JetBrains Mono, monospace', fontSize: '0.9375rem', fontWeight: 600, color: ACCENT2, marginBottom: 8, textAlign: 'center' }}>
+            <div style={{ fontFamily: 'JetBrains Mono, monospace', fontSize: '0.9375rem', color: ACCENT2, marginBottom: 8, textAlign: 'center' }}>
               Q₂(x, y) = {fmtFormStr(eqA2, eqB2, eqC2)}
             </div>
             <div dangerouslySetInnerHTML={{ __html: svg2 }} />
@@ -147,22 +147,22 @@ export default function TopographCanvas() {
 
   const btnStyleActive = {
     background: ACCENT, color: '#0d0d1a',
-    fontSize: '0.875rem', fontWeight: 700, letterSpacing: 1, border: `1px solid ${ACCENT}`,
+    fontSize: '0.875rem', letterSpacing: 1, border: `1px solid ${ACCENT}`,
     borderRadius: 6, padding: '5px 16px', cursor: 'pointer',
   } as React.CSSProperties;
   const btnStyleIdle = {
     background: BG_CARD, color: UI_TEXT,
-    fontSize: '0.875rem', fontWeight: 600, letterSpacing: 1, border: '1px solid #2a2a5a',
+    fontSize: '0.875rem', letterSpacing: 1, border: '1px solid #2a2a5a',
     borderRadius: 6, padding: '5px 16px', cursor: 'pointer',
   } as React.CSSProperties;
   const btnSubActive = {
     background: 'transparent', color: ACCENT,
-    fontSize: '0.875rem', fontWeight: 700, border: 'none', borderBottom: `2px solid ${ACCENT}`,
+    fontSize: '0.875rem', border: 'none', borderBottom: `2px solid ${ACCENT}`,
     borderRadius: 0, padding: '5px 20px', cursor: 'pointer',
   } as React.CSSProperties;
   const btnSubIdle = {
     background: 'transparent', color: UI_TEXT,
-    fontSize: '0.875rem', fontWeight: 600, border: 'none', borderBottom: '2px solid transparent',
+    fontSize: '0.875rem', border: 'none', borderBottom: '2px solid transparent',
     borderRadius: 0, padding: '5px 20px', cursor: 'pointer',
   } as React.CSSProperties;
 
@@ -203,7 +203,7 @@ export default function TopographCanvas() {
         <div style={{ flex: 1 }} />
         {md !== 'equiv' && (
           <span style={{ fontFamily: 'JetBrains Mono, monospace', fontSize: '1rem',
-                          fontWeight: 'bold', color: ACCENT }}>
+                          color: ACCENT }}>
             {formEq}
           </span>
         )}

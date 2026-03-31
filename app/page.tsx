@@ -36,7 +36,7 @@ function AnimationDialog({ onClose }: { onClose: () => void }) {
     <div className="anim-dialog-overlay" onClick={e => e.target === e.currentTarget && onClose()}>
       <div className="anim-dialog">
         <div style={{ fontFamily: 'JetBrains Mono, monospace', fontSize: '1rem',
-                      fontWeight: 600, color: ACCENT, marginBottom: 16 }}>
+                      color: ACCENT, marginBottom: 16 }}>
           Animation Controls
         </div>
         <div style={{ fontSize: '0.6875rem', color: UI_TEXT, marginBottom: 14, lineHeight: 1.6 }}>
@@ -64,7 +64,7 @@ function AnimationDialog({ onClose }: { onClose: () => void }) {
           <button onClick={onClose}
                   style={{ background: ACCENT, color: '#0d0d1a', border: 'none',
                            borderRadius: 6, padding: '6px 18px', cursor: 'pointer',
-                           fontFamily: 'JetBrains Mono, monospace', fontWeight: 700, fontSize: '0.75rem' }}>
+                           fontFamily: 'JetBrains Mono, monospace', fontSize: '0.75rem' }}>
             Done
           </button>
         </div>
