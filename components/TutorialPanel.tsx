@@ -168,11 +168,6 @@ export default function TutorialPanel({
                       color: ACCENT, letterSpacing: 1, marginBottom: 2 }}>
           {tutNum ? `${tutNum}. ` : ''}{tutorialData.title}
         </div>
-        {tutorialData.book && (
-          <div style={{ fontSize: '0.875rem', color: UI_TEXT }}>
-            {tutorialData.book}
-          </div>
-        )}
       </div>
       {/* Nav row */}
       <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
