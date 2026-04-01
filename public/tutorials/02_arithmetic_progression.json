@@ -31,7 +31,7 @@
     },
     {
       "title": "Why the Rule Works",
-      "text": "The arithmetic progression rule is not a coincidence — it follows directly from algebra.\n\nGiven two basis vectors e₁ = (p, q) and e₂ = (r, s) with det = ps − qr = ±1, the four vectors at the corners of the 'diamond' are e₁, e₂, e₁+e₂, and −e₁ (or some sign variant).\n\nThe bilinear form associated to Q is:\nB(u, v) = Q(u + v) − Q(u) − Q(v)\n\nA direct calculation shows:\nQ(e₁) + Q(e₂) = Q(e₁ + e₂) + Q(e₁ − e₂) − 2·correction\n\nMore precisely, the rule follows from:\nQ(e₁ + e₂) + Q(e₁ − e₂) = 2Q(e₁) + 2Q(e₂)\n\nThis is the **parallelogram law** for quadratic forms — a consequence of bilinearity.",
+      "text": "The arithmetic progression rule is not a coincidence — it follows directly from algebra.\n\nGiven two basis vectors e₁ = (p, q) and e₂ = (r, s) with det = ps − qr = ±1, the four vectors at the corners of the 'diamond' are e₁, e₂, e₁+e₂, and −e₁ (or some sign variant).\n\nThe bilinear form associated to Q is:\nB(u, v) = Q(u + v) − Q(u) − Q(v)\n\nThe rule follows from:\nQ(e₁ + e₂) + Q(e₁ − e₂) = 2Q(e₁) + 2Q(e₂)\n\nThis is the **parallelogram law** for quadratic forms — a consequence of bilinearity.",
       "form": {
         "a": 1,
         "b": 1,
@@ -43,7 +43,7 @@
         "highlight_home": false,
         "mode": "default"
       },
-      "activity": "Verify the rule manually. For Q = x² + xy + y² and vectors (1,0), (0,1), (1,1):  \nQ(1,0) = 1, Q(0,1) = 1, Q(1,1) = 3.\nNow Q(2,1) should equal Q(1,0) + Q(1,1) − Q(0,1) = 1 + 3 − 1 = 3.\nCheck: Q(2,1) = 4 + 2 + 1 = 7.  Hmm, that's 7 not 3!\n\nWait — the rule requires adjacent faces sharing an edge (a basis pair). Let's use the correct adjacent pair: (0,1) and (1,1) form a basis (det = 1). Their common neighbour across the edge is (1,2): Q(1,2) = 1 + 2 + 4 = 7. And (0,1)+(1,1)=1+3=4; the other neighbour across that node is Q(-1,0)=1. So 1+3 = 1+3 ✓.",
+      "activity": "Verify the rule. For Q = x² + xy + y², click on any face at depth ≥ 2 — the sidebar shows the face value and its parent-edge neighbours, and confirms that f = u + v − e holds at each node.\n\nTry changing the form to Q = x² + 2y² and check whether the rule still applies.",
       "quiz": {
         "question": "For Q(x,y) = x² + y², you know Q(1,0)=1, Q(1,1)=2, Q(0,1)=1. Using the rule, what is Q(2,1)?",
         "options": [
@@ -53,12 +53,12 @@
           "2"
         ],
         "correct": 0,
-        "explanation": "The basis pair (1,0),(1,1) has det=1. Their sum (2,1) and their difference (0,-1)~(0,1) satisfy Q(1,0)+Q(1,1) = Q(2,1)+Q(0,1): 1+2 = Q(2,1)+1, so Q(2,1)=2. Wait — actually Q(2,1)=4+1=5. The correct adjacent pair for computing Q(2,1) is (1,0) and (1,1): Q(2,1)+Q(0,-1) = 2Q(1,0)+2Q(1,1) → not this formula. Using u+v=e+f: with e=(1,0)→1 and f=(1,1)→2, the shared edge gives us u=Q of one neighbour and v=Q of other. Q(2,1)=5 by direct calculation: 4+0+1=5."
+        "explanation": "Q(2,1) = 2² + 1² = 4 + 1 = 5 by direct calculation."
       }
     },
     {
       "title": "Step-by-Step Cell Completion",
-      "text": "You can use the arithmetic progression rule to fill in a topograph cell by cell, starting from the home triad.\n\nGiven any three mutually adjacent faces (a **superbase**) with values e, u, v:\n- The face on the far side of the edge between e and u has value: **f = e + u − v** ... No, wait.\n\nThe correct rule per Conway:\n\nAround each **vertex** of the topograph, exactly three faces meet. Label them A, B, C. Then for any edge AB, the two faces NOT on that edge (i.e., the faces C on each endpoint) satisfy:\n\nA + B = C_left + C_right\n\nwhere C_left and C_right are the two faces at the endpoints of edge AB that are NOT A or B.\n\nSo if you know three faces of a 'diamond' (rhombus), you can compute the fourth as:\nf_new = A + B − f_old",
+      "text": "You can use the arithmetic progression rule to fill in a topograph cell by cell, starting from the home triad.\n\nAround each **vertex** of the topograph, exactly three faces meet. Label them A, B, C. Then for any edge AB, the two faces at the endpoints of that edge that are NOT A or B satisfy:\n\nA + B = C_left + C_right\n\nwhere C_left and C_right are the third faces at each endpoint of edge AB.\n\nSo if you know three faces of a 'diamond' (rhombus), you can compute the fourth as:\nf_new = A + B − f_old",
       "form": {
         "a": 1,
         "b": 0,
@@ -79,8 +79,8 @@
           "0",
           "2"
         ],
-        "correct": 1,
-        "explanation": "The diamond rule: opposite corners sum to the same value. So 1 + 2 + 3 = sum of all four... actually using A+B = C_left+C_right: if the shared edge has values A=1, B=2 and one opposite is 3, then the other is 1+2−3=0. Let me restate: f_new = A + B − f_old = 1+2−3=0."
+        "correct": 2,
+        "explanation": "Using f_new = A + B − f_old: with A=1, B=2, f_old=3, the fourth value is 1+2−3=0."
       }
     },
     {
